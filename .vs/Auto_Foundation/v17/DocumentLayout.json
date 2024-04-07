@@ -1,0 +1,175 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\test\\repos\\training\\Auto_Foundation\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|d:\\test\\repos\\training\\auto_foundation\\auto_foundation\\figure\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\canvas\\drawcanvas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\viewmodel\\settingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\octagonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\octagonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\view\\combinewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\view\\combinewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\view\\settingview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\view\\settingview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\viewmodel\\combineviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\viewmodel\\combineviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClCAD.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\ClCAD.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
+              "RelativeToolTip": "Auto_Foundation\\Library\\ClCAD.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwBIAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T06:56:22.442Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DrawCanvas.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Canvas\\DrawCanvas.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Canvas\\DrawCanvas.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Canvas\\DrawCanvas.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Canvas\\DrawCanvas.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACcBAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T06:41:04.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OctagonModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T00:23:02.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SettingViewModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\SettingViewModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\SettingViewModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\SettingViewModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\ViewModel\\SettingViewModel.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAowHAAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-04T00:05:31.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SettingModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAIAzwOUAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-03T07:37:44.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CombineWindow.xaml",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\CombineWindow.xaml",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\CombineWindow.xaml",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\CombineWindow.xaml",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\View\\CombineWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-02T07:50:01.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SettingView.xaml",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\SettingView.xaml",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\SettingView.xaml",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\SettingView.xaml",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\View\\SettingView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-04-01T00:13:50.26Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CombineViewModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\CombineViewModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\CombineViewModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\CombineViewModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\ViewModel\\CombineViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-01T00:53:31.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Command.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Command.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Command.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Command.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Command.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-01T01:23:08.196Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

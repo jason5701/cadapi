@@ -1,0 +1,185 @@
+﻿<UserControl x:Class="Auto_Foundation.Figure.View.SettingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Auto_Foundation.Figure.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="700"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             x:Name="SettingUC" Background="SeaShell">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingViewCommand}"
+                                   CommandParameter="{Binding ElementName=MainWindow}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Header="FDN Size(mm)" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <!--#region Bottom FDN-->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Bottom FDN Length:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                         Text="{Binding OctagonModel.SettingModel.BottomFDNLength, Mode=TwoWay,
+                                UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding BottomFDNLength_TextChanged_Command}"
+                               CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Bottom FDN Center:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Background="LightGray"
+                         Text="{Binding OctagonModel.SettingModel.BottomFDNCenter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Bottom FDN Height:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1"
+                         Text="{Binding OctagonModel.SettingModel.BottomFDNHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding BottomFDNHeight_TextChanged_Command}"
+                                                CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <!--#endregion-->
+                <!--#region Top FDN-->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Top FDN Length:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="3" Grid.Column="1" 
+                         Text="{Binding OctagonModel.SettingModel.TopFDNLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding TopFDNLength_TextChanged_Command}"
+                            CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Top FDN Center:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Background="LightGray"
+         Text="{Binding OctagonModel.SettingModel.TopFDNCenter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Top FDN Height:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="5" Grid.Column="1" 
+                         Text="{Binding OctagonModel.SettingModel.TopFDNHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding TopFDNHeight_TextChanged_Command}"
+         CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <!--#endregion-->
+                <!--#region Depth from Ground-->
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Depth:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="6" Grid.Column="1" IsReadOnly="True" Background="LightGray"
+                         Text="{Binding OctagonModel.SettingModel.Depth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
+                <!--#endregion-->
+                <!--#region BCD Radius-->
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="B.C.D Radius:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="7" Grid.Column="1" 
+                         Text="{Binding OctagonModel.SettingModel.BCDCircle, Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <i:InvokeCommandAction Command="{Binding BCDCircle_TextChanged_Command}"
+                                                    CommandParameter="{Binding ElementName=MainWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+                <!--#endregion-->
+                <!--#region X-->
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="X:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="8" Grid.Column="1" IsReadOnly="True" Background="LightGray"
+                         Text="{Binding OctagonModel.SettingModel.X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Draw Linetype" Margin="5,260,5,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <!--#region Color-->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Color:" VerticalAlignment="Center" />
+                <TextBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" Background="LightGray"
+                         Text="{Binding OctagonModel.SettingModel.ColorIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
+                <Button Grid.Row="0" Grid.Column="2" BorderThickness="0.5" 
+                        Background="{Binding OctagonModel.SettingModel.ColorValue}"
+                        VerticalAlignment="Center" Width="40" Height="30"
+                        Command="{Binding ColorBtnCommand}"
+                        CommandParameter="{Binding ElementName=MainWindow}"
+                        Margin="3,0,0,0"/>
+                <!--#endregion-->
+                <!--#region Linetype-->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Linetype:" VerticalAlignment="Center" />
+                <ComboBox Grid.Row="1" Grid.Column="1" 
+                          SelectedItem="{Binding OctagonModel.SettingModel.SelectedLinetype, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding OctagonModel.SettingModel.Linetypes}"
+                          Grid.ColumnSpan="2" VerticalAlignment="Center" Width="140"
+                          Margin="5,0,0,0">
+                    <!--<i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectedLinetype_ComboboxChanged_Command}" CommandParameter="{Binding ElementName=MainWindow}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>-->
+                </ComboBox>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Header="미리보기" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Canvas Grid.Row="0" x:Name="Plan" Width="380" Height="280" />
+                <Canvas Grid.Row="1" x:Name="Section" Width="380" Height="280" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

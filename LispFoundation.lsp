@@ -1,0 +1,2 @@
+(command "NETLOAD" "D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Auto_Foundation.dll")
+(command "NETLOAD" "D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Microsoft.Xaml.Behaviors.dll")
