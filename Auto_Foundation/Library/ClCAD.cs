@@ -6,6 +6,7 @@ using Autodesk.AutoCAD.Geometry;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Windows.Controls;
 
 public class ClCAD
@@ -527,11 +528,11 @@ public class ClCAD
     {
         return new Point3d(p1.X / 2 + p2.X / 2, p1.Y / 2 + p2.Y / 2, 0);
     }
-    public static Point3d GetPointsFromUser(string param)
+    public static Point3d? GetPointsFromUser(string param)
     {
         PromptPointResult ppr = Application.DocumentManager.MdiActiveDocument.
             Editor.GetPoint(new PromptPointOptions("\n" + param));
-        if (ppr.Status != PromptStatus.OK) return new Point3d(-111, -123, -147);
+        if (ppr.Status != PromptStatus.OK) return null;// new Point3d(-111, -123, -147);
         return ppr.Value;
     }
     public static void CreateLayer(string layerName, short color, string linetypeName, LineWeight lineWeight, bool canPrint)
@@ -761,7 +762,11 @@ public class ClCAD
             tr.Commit();
         }
     }
-
+    public static void ZoomAll()
+    {
+        object app = Application.AcadApplication;
+        app.GetType().InvokeMember("ZoomExtents", BindingFlags.InvokeMethod, null, app, null);
+    }
     public class DimStyleSettings
     {
         public string Name { get; set; } = "DTL";

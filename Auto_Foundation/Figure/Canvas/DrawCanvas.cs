@@ -133,10 +133,10 @@ public class DrawCanvas
         Point py2 = new Point(p0.X, p0.Y + cHeight / 2);
         PolylineWay(canvas, new List<Point> { py1, py2 });
         #endregion
-        #region BCD Circle
-        double radius = BCDCircleRadius / scale / 2;
-        CreateCircle(canvas, p0, radius, 0.75, sc);
-        #endregion
+        //#region BCD Circle
+        //double radius = BCDCircleRadius / scale / 2;
+        //CreateCircle(canvas, p0, radius, 0.75, sc);
+        //#endregion
         #region BottomFDN
         sc = Brushes.Black;
         Point f1 = new Point(p0.X - BottomCenter / scale / 2, p0.Y - BottomLength / scale / 2);

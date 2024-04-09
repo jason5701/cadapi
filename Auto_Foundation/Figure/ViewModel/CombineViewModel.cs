@@ -1,5 +1,6 @@
 ﻿using Auto_Foundation.Figure.Model;
 using Auto_Foundation.Figure.View;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Geometry;
 using System.Windows.Input;
 
@@ -28,8 +29,8 @@ namespace Auto_Foundation.Figure.ViewModel
             set { _OctagonModel = value; OnPropertyChanged(); }
         }
 
-        private Point3d _CenterPoint;
-        public Point3d CenterPoint
+        private Point3d? _CenterPoint;
+        public Point3d? CenterPoint
         {
             get { return _CenterPoint; }
             set { _CenterPoint = value; OnPropertyChanged();}
@@ -58,7 +59,15 @@ namespace Auto_Foundation.Figure.ViewModel
 
         private void DrawAutoCAD()
         {
-            OctagonModel.SettingModel.DrawFondation(CenterPoint);
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+
+            if(CenterPoint != null)
+            {
+                OctagonModel.SettingModel.DrawFondation(CenterPoint);
+            }else
+            {
+                doc.Editor.WriteMessage("\nCancel GTF");    
+            }
         }
     }
 }

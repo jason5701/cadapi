@@ -210,10 +210,10 @@ namespace Auto_Foundation.Figure.Model
 
         #endregion
         #region method
-        public void DrawFondation(Point3d value)
+        public void DrawFondation(Point3d? value)
         {
             #region Section
-            Point3d p0 = value;
+            Point3d p0 = (Point3d)value;
             Point3d pStart = new Point3d(p0.X - TopFDNLength /2, p0.Y + BottomFDNHeight / 2, 0);
             Point3d pNext = new Point3d(p0.X - BottomFDNLength / 2, pStart.Y, 0);
             Point3d p1 = new Point3d(p0.X - BottomFDNLength / 2, p0.Y - BottomFDNHeight / 2, 0);
@@ -228,7 +228,7 @@ namespace Auto_Foundation.Figure.Model
             Point3d p7 = new Point3d(p6.X, p6.Y + TopFDNHeight, 0);
             Point3d p8 = new Point3d(p5.X, p7.Y, 0);
             ClCAD.SetLayerCurrent("TOPFDN");
-            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p6, p7, p8, p5 }, false);
+            ClCAD.CreatePolylineFromListPoints(new List<Point3d> { p6, p7, p8, p5 }, false, SelectedLinetype, ColorIndex);
             Point3d py1 = new Point3d(p0.X, p1.Y - 70, 0);
             Point3d py2 = new Point3d(p0.X, p7.Y + 70, 0);
             ClCAD.SetLayerCurrent("CENTER");
@@ -289,7 +289,7 @@ namespace Auto_Foundation.Figure.Model
             ClCAD.CreatePolylineFromListPoints
             (
                 new List<Point3d> { pp9, pp10, pp11, pp12, pp13, pp14, pp15, pp16 },
-                true
+                true, SelectedLinetype, ColorIndex
             );
             Point3d px1 = new Point3d(p1.X - 70, pCenter.Y, 0);
             Point3d px2 = new Point3d(p2.X + 70, pCenter.Y, 0);
@@ -298,10 +298,10 @@ namespace Auto_Foundation.Figure.Model
             ClCAD.SetLayerCurrent("CENTER");
             ClCAD.CreateLine(px1, px2);
             ClCAD.CreateLine(py1, py2);
-            #region Symbol
-            ClCAD.SetLayerCurrent("SYMBOL");
-            ClCAD.CreateCircle(pCenter, BCDCircle/2, "Continuous", 1);
-            #endregion
+            //#region Symbol
+            //ClCAD.SetLayerCurrent("SYMBOL");
+            //ClCAD.CreateCircle(pCenter, BCDCircle/2, "Continuous", 1);
+            //#endregion
             #endregion
             #region PlanDIM
             ClCAD.SetLayerCurrent("DIMS");
@@ -336,6 +336,8 @@ namespace Auto_Foundation.Figure.Model
             };
             ClCAD.CreateDimension_Y(dsY, 25, 1);
             #endregion
+
+            ClCAD.ZoomAll();
         }
         #endregion
     }
