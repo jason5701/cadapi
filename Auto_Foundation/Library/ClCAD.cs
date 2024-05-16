@@ -1,19 +1,22 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
+﻿using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.PlottingServices;
+using Autodesk.AutoCAD.Runtime;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
-using System.Reflection;
-using System.Windows.Controls;
+using System.Linq;
+using System.Windows;
 
 public class ClCAD
 {
     public static void CreateBlock(Point3d pStart, string blockName)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -32,7 +35,7 @@ public class ClCAD
     }
     public static void GetBlock(string blockName)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         using (Database openDb = new Database(false, true))
         {
             string path = "D:/test/repos/training/Auto_Foundation/referenceBlock/blocks.dwg";
@@ -56,95 +59,9 @@ public class ClCAD
             }
         }
     }
-    //public static void GetBlockFromExternalFile(string blockName, Point3d p)
-    //{
-    //    Document doc = Application.DocumentManager.MdiActiveDocument;
-    //    Database db = doc.Database;
-
-    //    using (doc.LockDocument())
-    //    using (Transaction tr = db.TransactionManager.StartTransaction())
-    //    {
-    //        using (Database externalDb = new Database(false, true))
-    //        {
-    //                try
-    //                {
-    //                    string path = "D:\\test\\repos\\training\\Auto_Foundation\\referenceBlock\\blocks.dwg";
-    //                    externalDb.ReadDwgFile(path, FileOpenMode.OpenForReadAndAllShare, true, "");
-    //                }
-    //                catch
-    //                {
-    //                    doc.Editor.WriteMessage($"\nError: Failed to open the external DWG file.");
-    //                    return;
-    //                }
-    //            using(Transaction exTr = externalDb.TransactionManager.StartTransaction())
-    //            {
-    //                BlockTable externalBlockTable = (BlockTable)tr.GetObject(externalDb.BlockTableId, OpenMode.ForRead);
-
-    //                if (!externalBlockTable.Has(blockName))
-    //                {
-    //                    doc.Editor.WriteMessage($"\nError: Block '{blockName}' not found in the external DWG file.");
-    //                    return;
-    //                }
-    //                ObjectId blockId = externalBlockTable[blockName];
-    //                BlockTableRecord currentSpace = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
-    //                BlockReference blockRef = new BlockReference(p, blockId);
-    //                currentSpace.AppendEntity(blockRef);
-    //                tr.AddNewlyCreatedDBObject(blockRef, true);
-
-    //                doc.Editor.WriteMessage($"\nBlock '{blockName}' inserted from the external DWG file.");
-    //                exTr.Commit();
-    //            }
-    //            tr.Commit();
-    //                doc.Editor.Command("_-INSERT", "", "", "0,0", "1", "0");
-    //        }
-    //    }
-    //}
-    //public static void GetBlock(Point3d p, string blockName)
-    //{
-    //    Document doc = Application.DocumentManager.MdiActiveDocument;
-    //    Database db = doc.Database;
-
-    //    using (doc.LockDocument())
-    //    using (Transaction tr = db.TransactionManager.StartTransaction())
-    //    {
-    //        string path = "D:/test/repos/training/Auto_Foundation/referenceBlock/blocks.dwg";
-    //        //BlockTable currentBt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
-    //        using (Database eDb = new Database(false, true))
-    //        {
-    //            eDb.ReadDwgFile(path, FileOpenMode.OpenTryForReadShare, true, "");
-    //            //using (Transaction newTr = eDb.TransactionManager.StartTransaction())
-    //            //{
-    //                //BlockTable oBt = (BlockTable)newTr.GetObject(eDb.BlockTableId, OpenMode.ForRead);
-    //                //if (oBt.Has(blockName))
-    //                //{
-    //                    try
-    //                    {
-
-    //                        //ObjectId id = oBt[blockName];
-
-    //                        //BlockTableRecord btr = (BlockTableRecord)newTr.GetObject(id, OpenMode.ForRead);
-    //                        //BlockTableRecord currentBtr = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
-    //                        db.Insert(Path.GetFileNameWithoutExtension(path), eDb, true);
-    //                        //BlockReference br = new BlockReference(p, id);
-    //                        //currentBtr.AppendEntity(br);
-    //                        //tr.AddNewlyCreatedDBObject(br, true);
-
-    //                        doc.Editor.Command("_-INSERT", blockName, "", "0,0", "1", "0");
-    //                    }
-    //                    catch
-    //                    {
-    //                        doc.Editor.WriteMessage($"\nBlock '{blockName}' not found");
-    //                    //}
-    //                }
-    //            //    newTr.Commit();
-    //            //}
-    //        }
-    //        tr.Commit();
-    //    }
-    //}
     public static void CreateDimStyles(DimStyleSettings ds)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -196,7 +113,7 @@ public class ClCAD
     public static Polyline PlineNetBreak(Point3d p1, Point3d p6, double angle) // angle = 200
     {
         Polyline pl = new Polyline();
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -228,7 +145,7 @@ public class ClCAD
     }
     public static void CreatehatchFromListPointP(List<Point3d> listPoint, string nameHatch, double patternScale)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -265,7 +182,7 @@ public class ClCAD
     }
     public static void CreatePolylineFromListPoints(List<Point3d> dsP, bool close, string linetypeName, short colorIndex)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -297,7 +214,7 @@ public class ClCAD
     }
     public static void CreatePolylineFromListPoints(List<Point3d> dsP, bool close)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -322,7 +239,7 @@ public class ClCAD
     }
     public static void CreateLine(Point3d P1, Point3d P2, double scale)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -343,7 +260,7 @@ public class ClCAD
     }
     public static void CreateLine(Point3d P1, Point3d P2)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -361,7 +278,7 @@ public class ClCAD
     }
     public static void CreateTextStyle(string nameTextStyle, string nameFont, double textSize, double xScale, bool isSHX, bool isBold)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -432,7 +349,7 @@ public class ClCAD
     }
     public static void SetDimStyleCurrent(string styleName)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
 
         using (doc.LockDocument())
@@ -450,7 +367,7 @@ public class ClCAD
     }
     public static void SetLayerCurrent(string layerName)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -470,7 +387,7 @@ public class ClCAD
     }
     public static void CreateCircle(Point3d pCenter, double radius, string linetypeName, short colorIndex)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -494,7 +411,7 @@ public class ClCAD
     }
     public static void CreateCircle(Point3d pCenter, double radius)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -533,11 +450,23 @@ public class ClCAD
         PromptPointResult ppr = Application.DocumentManager.MdiActiveDocument.
             Editor.GetPoint(new PromptPointOptions("\n" + param));
         if (ppr.Status != PromptStatus.OK) return null;// new Point3d(-111, -123, -147);
-        return ppr.Value;
+        else return ppr.Value;
+    }
+    public static SelectionSet GetSelctionFromUser()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+
+        PromptSelectionResult psr = doc.Editor.SelectImplied();
+        if (psr.Status != PromptStatus.OK) 
+        {
+            psr = doc.Editor.GetSelection();
+            return psr.Value; 
+        }
+        return psr.Value;
     }
     public static void CreateLayer(string layerName, short color, string linetypeName, LineWeight lineWeight, bool canPrint)
     {
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -573,7 +502,7 @@ public class ClCAD
     public static void DimX(Point3d P1, Point3d P2, double Y1)
     {
         if (P1.X == P2.X) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -598,7 +527,7 @@ public class ClCAD
     public static void DimX(Point3d P1, Point3d P2, double Y1, string TextValue)
     {
         if (P1.X == P2.X) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -624,7 +553,7 @@ public class ClCAD
     public static void DimX(double X1, double X2, double Y, double Y1)
     {
         if (X1 == X2) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -646,7 +575,7 @@ public class ClCAD
     public static void DimX(double X1,double X2, double Y,double Y1,string TextValue)
     {
         if (X1 == X2) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -669,7 +598,7 @@ public class ClCAD
     public static void DimY(Point3d P1, Point3d P2, double X1)
     {
         if (P1.Y == P2.Y) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -694,7 +623,7 @@ public class ClCAD
     public static void DimY(Point3d P1, Point3d P2, double X1, string TextValue)
     {
         if (P1.Y == P2.Y) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -720,7 +649,7 @@ public class ClCAD
     public static void DimY(double Y1, double Y2, double X, double X1)
     {
         if (Y1 == Y2) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -742,7 +671,7 @@ public class ClCAD
     public static void DimY(double Y1, double Y2, double X, double X1, string TextValue)
     {
         if (Y1 == Y2) return;
-        Document doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
         using (doc.LockDocument())
         using (Transaction tr = db.TransactionManager.StartTransaction())
@@ -762,11 +691,11 @@ public class ClCAD
             tr.Commit();
         }
     }
-    public static void ZoomAll()
-    {
-        object app = Application.AcadApplication;
-        app.GetType().InvokeMember("ZoomExtents", BindingFlags.InvokeMethod, null, app, null);
-    }
+    //public static void ZoomAll()
+    //{
+    //    var app = AcadApplication;
+    //    app.GetType().InvokeMember("ZoomExtents", BindingFlags.InvokeMethod, null, app, null);
+    //}
     public class DimStyleSettings
     {
         public string Name { get; set; } = "DTL";
@@ -790,4 +719,511 @@ public class ClCAD
         public double ScaleFactor { get; set; } = 1;
         public int DecimalPoint { get; set; } = 0;
     }
+    public static void HideLayers(SelectionSet ss)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using(doc.LockDocument())
+        using(Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            HashSet<ObjectId> layers = new HashSet<ObjectId>();
+
+            foreach (SelectedObject o in ss)
+            {
+                Entity ent = (Entity)tr.GetObject(o.ObjectId, OpenMode.ForRead);
+                if(ent != null)
+                {
+                    LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(ent.LayerId, OpenMode.ForWrite);
+                    if(ltr != null && !ltr.IsFrozen && !ltr.IsOff) // !layers.Contains(ltr.ObjectId))
+                    {
+                        ltr.IsOff = true;
+                        doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
+                        layers.Add(ltr.ObjectId);
+                    }
+                }
+            }
+
+            tr.Commit();
+        }
+    }
+    public static void ShowAllLayers()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using(doc.LockDocument())
+        using(Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            LayerTable lt = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
+            db.Clayer = lt["0"];
+
+            foreach(ObjectId o in lt)
+            {
+                LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(o, OpenMode.ForRead);
+                if (ltr.Name != "0")
+                {
+                    ltr.UpgradeOpen();
+
+                    ltr.IsOff = false;
+                }
+            }
+            tr.Commit();
+        }
+    }
+    public static List<string> GetXrefLayers(string xrefPath)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        List<string> layers = new List<string>();
+
+        using (doc.LockDocument())
+        using(Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            Database xrefDb = new Database(false, true);
+            xrefDb.ReadDwgFile(xrefPath, FileOpenMode.OpenForReadAndAllShare, true, "");
+            using(Transaction xrefTr = xrefDb.TransactionManager.StartTransaction())
+            {
+                LayerTable lt = (LayerTable)xrefTr.GetObject(xrefDb.LayerTableId, OpenMode.ForRead);
+                foreach(ObjectId o in lt)
+                {
+                    if (o.ObjectClass.IsDerivedFrom(RXClass.GetClass(typeof(LayerTableRecord))))
+                    {
+                        LayerTableRecord ltr = (LayerTableRecord)xrefTr.GetObject(o, OpenMode.ForRead);
+                        layers.Add(ltr.Name);
+                    }
+
+                }
+                xrefTr.Commit();
+            }
+            tr.Commit();
+        }
+        return layers;
+    }
+    public static void GetXrefFilePath() // string fileName
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        List<string> layers = new List<string>();
+
+        using (doc.LockDocument())
+        using(Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+            foreach(ObjectId id in bt)
+            {
+                BlockTableRecord btr = (BlockTableRecord)tr.GetObject(id,OpenMode.ForRead);
+                if (btr.IsFromExternalReference)
+                {
+                    layers = GetXrefLayers(btr.PathName); 
+                }
+            }
+            if (layers.Count > 0)
+            {
+                PromptKeywordOptions pko = new PromptKeywordOptions("\nHide or Change Color(Press h or c)");
+                pko.AllowNone = true;
+                pko.Keywords.Add("h");
+                pko.Keywords.Add("c");
+
+                PromptResult pr = doc.Editor.GetKeywords(pko);
+                LayerTable lt = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
+                if(pr.Status == PromptStatus.OK)
+                {
+                    if(pr.StringResult.Equals("h", StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (ObjectId o in lt)
+                        {
+                            LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(o, OpenMode.ForWrite);
+
+                            foreach (string layer in layers)
+                            {
+                                if (ltr.Name.Contains(layer))
+                                {
+                                    if (ltr != null && !ltr.IsFrozen && !ltr.IsOff)
+                                    {
+                                        ltr.IsOff = true;
+                                        doc.Editor.WriteMessage($"\n{ltr.Name} is hidden");
+                                    }
+                                }
+                            }
+                        }
+                        doc.Editor.WriteMessage($"\nhidden count: ${layers.Count}");
+                    }
+                    else if(pr.StringResult.Equals("c", StringComparison.OrdinalIgnoreCase))
+                    {
+                        doc.Editor.WriteMessage("\nTodo change color");
+                    }
+                }
+                
+                tr.Commit();
+            }
+
+        }
+    }
+
+
+
+    #region Test Method
+    public static string GetCurrentDocName()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+
+        return doc.Name;
+    }
+    public static void ProcessDwg(string path, Action<Database> action)
+    {
+        using (var db = new Database(false, true))
+        {
+            db.ReadDwgFile(path, FileOpenMode.OpenForReadAndAllShare, false, null);
+            using (new WorkingDatabase(db))
+            {
+                action(db);
+            }
+        }
+    }
+    public static List<string> SearchObjectByBlock(
+        DrawClass obj,
+        string blockName, 
+        string device, 
+        string paper, 
+        string styleName,
+        bool isCombineFile
+        )
+    {
+        List<string> pdfPath = new List<string>();
+        var ed = Application.DocumentManager.MdiActiveDocument.Editor;
+        var bgPlot = Application.GetSystemVariable("Backgroundplot");
+        Application.SetSystemVariable("Backgroundplot", 0);
+        ProcessDwg(obj.FilePath, db =>
+        {
+            HostApplicationServices.WorkingDatabase = db;
+            using (var tr = db.TransactionManager.StartTransaction())
+            {
+                try
+                {
+                    List<PointClass> points = new List<PointClass>();
+                    var l = new Layout();
+                    var p1 = new Point3d();
+                    var p2 = new Point3d();
+
+                    var bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+                    var ms = (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+                        foreach (ObjectId msId in ms)
+                        {
+                            if (msId.ObjectClass.DxfName == "INSERT")
+                            {
+                                var br = (BlockReference)tr.GetObject(msId, OpenMode.ForRead);
+                                var btr = (BlockTableRecord)tr.GetObject(br.BlockTableRecord, OpenMode.ForRead);
+                                if (btr.Name.Equals(blockName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    if(btr.IsFromExternalReference) db.ResolveXrefs(true, false);
+                                    foreach (ObjectId id in btr)
+                                    {
+                                        var ent = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                                        if(ent != null&& ent is Polyline pl && pl.NumberOfVertices == 4)
+                                        {
+                                            var mat = br.BlockTransform;
+
+                                            p1 = pl.GetPoint3dAt(3).TransformBy(mat);
+                                            p2 = pl.GetPoint3dAt(1).TransformBy(mat);
+
+                                            using (ViewTableRecord vt = ed.GetCurrentView())
+                                            {
+                                                var co = Matrix3d.WorldToPlane(vt.ViewDirection) *
+                                                    Matrix3d.Displacement(vt.Target.GetAsVector().Negate()) *
+                                                    Matrix3d.Rotation(vt.ViewTwist, vt.ViewDirection, vt.Target);
+
+                                                var x = p1.TransformBy(co);
+                                                var y = p2.TransformBy(co);
+                                                var lm = LayoutManager.Current;
+                                                l = (Layout)tr.GetObject(lm.GetLayoutId(lm.CurrentLayout), OpenMode.ForRead);
+                                                points.Add(new PointClass(x, y));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        
+                        }
+                    if (points.Count > 0)
+                    {
+                        pdfPath = ProcessPlotPdf(
+                            l, 
+                            points, 
+                            obj.FilePath, 
+                            device, 
+                            paper, 
+                            styleName, 
+                            isCombineFile
+                            );
+                    }
+                    else ed.WriteMessage("\nThere is no same blocks: " +
+                        System.IO.Path.GetFileNameWithoutExtension(obj.FilePath)+"\n");
+                    tr.Commit();
+                }
+                catch (Autodesk.AutoCAD.Runtime.Exception ex)
+                {
+                    ed.WriteMessage("\nerror: " + ex.Message);
+                }
+            }
+    });
+        Application.SetSystemVariable("Backgroundplot", bgPlot);
+        return pdfPath;
+    }
+    public static List<string> ProcessPlotPdf(
+        Layout lo,
+        List<PointClass> points,
+        string path,
+        string device,
+        string paper,
+        string styleName,
+        bool isCombine
+        )
+    {
+        int count = 1;
+        int numSheet = 1;
+        var dir = "D:\\sample\\1_150\\PDF\\";
+        var result = new List<string>();
+        //var dir = Path.GetDirectoryName(path)+"\\PDF\\";
+        //FolderBrowserDialog dialog = new FolderBrowserDialog();
+        //dialog.Description = "저장 폴더 선택";
+        //var result = dialog.ShowDialog();
+        //if (result != DialogResult.OK) return;
+
+        //string folderPath = dialog.SelectedPath;
+        var piv = new PlotInfoValidator { MediaMatchingPolicy = MatchingPolicy.MatchEnabled };
+
+        PlotInfo pi = new PlotInfo();
+        using (PlotEngine pe = PlotFactory.CreatePublishEngine())
+        {
+            using (PlotProgressDialog ppd = new PlotProgressDialog(false, (isCombine ? 1 : points.Count), true))
+            {
+                foreach(PointClass p in points)
+                {
+                    var pdfPath = $"{dir}{Path.GetFileNameWithoutExtension(path)}{(isCombine ? "" : ("_" + count))}.pdf";
+                    var ps = new PlotSettings(lo.ModelType);
+                    ps.CopyFrom(lo);
+
+                    var psv = PlotSettingsValidator.Current;
+
+                    var pwe = new Extents2d(p.P1.X, p.P2.Y, p.P2.X, p.P1.Y);
+
+                    ps.ScaleLineweights = true;
+                    psv.SetPlotWindowArea(ps, pwe);
+                    psv.SetPlotType(
+                        ps,
+                        Autodesk.AutoCAD.DatabaseServices.PlotType.Window
+                    );
+
+                    psv.SetUseStandardScale(ps, true);
+                    psv.SetStdScaleType(ps, StdScaleType.ScaleToFit);
+                    psv.SetPlotRotation(ps, PlotRotation.Degrees180);
+                    psv.SetPlotCentered(ps, true);
+                    psv.SetPlotConfigurationName(ps, device, paper);
+                    psv.SetCurrentStyleSheet(ps, styleName);
+
+                    pi = new PlotInfo() { Layout = lo.ObjectId };
+                    pi.OverrideSettings = ps;
+                    piv.Validate(pi);
+
+                    if (numSheet == 1)
+                    {
+                        ppd.set_PlotMsgString(PlotMessageIndex.DialogTitle, "Custom Plot Progress");
+                        ppd.set_PlotMsgString(PlotMessageIndex.CancelJobButtonMessage, "Cancel Job");
+                        ppd.set_PlotMsgString(PlotMessageIndex.CancelSheetButtonMessage, "Cancel Sheet");
+                        ppd.set_PlotMsgString(PlotMessageIndex.SheetSetProgressCaption, "Sheet Set Progress");
+                        ppd.set_PlotMsgString(PlotMessageIndex.SheetProgressCaption, "Sheet Progress");
+                        ppd.LowerPlotProgressRange = 0;
+                        ppd.UpperPlotProgressRange = 100;
+                        ppd.PlotProgressPos = 0;
+
+                        ppd.OnBeginPlot();
+                        ppd.IsVisible = true;
+                        pe.BeginPlot(ppd, null);
+
+                        pe.BeginDocument(
+                            pi,
+                            Path.GetFileNameWithoutExtension(path),
+                            null,
+                            1,
+                            true,
+                            pdfPath
+                        );
+                    }
+                    ppd.OnBeginSheet();
+
+                    ppd.LowerSheetProgressRange = 0;
+                    ppd.UpperSheetProgressRange = 100;
+                    ppd.SheetProgressPos = 0;
+
+                    PlotPageInfo ppi = new PlotPageInfo();
+                    pe.BeginPage(ppi, pi, (isCombine ? numSheet == points.Count : true), null);
+
+                    pe.BeginGenerateGraphics(null);
+                    ppd.SheetProgressPos = 50;
+                    pe.EndGenerateGraphics(null);
+
+                    pe.EndPage(null);
+                    ppd.SheetProgressPos = 100;
+                    ppd.OnEndSheet();
+                    if(isCombine) 
+                    { 
+                       if(numSheet == 1)
+                       {
+                           result.Add(pdfPath);
+                       }
+                        numSheet++; 
+                    }
+                    else
+                    {
+                        count++;
+                        pe.EndDocument(null);
+
+                        ppd.PlotProgressPos = 100;
+                        ppd.OnEndPlot();
+                        pe.EndPlot(null);
+                        result.Add(pdfPath);
+                    }
+                }
+                if(isCombine)
+                {
+                    pe.EndDocument(null);
+
+                    ppd.PlotProgressPos = 100;
+                    ppd.OnEndPlot();
+                    pe.EndPlot(null);
+                }
+            }
+        }
+        return result;
+    }
+    public static ObservableCollection<BlockClass> SetChooseBlocks()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        ObservableCollection<BlockClass> blocks = new ObservableCollection<BlockClass>();
+        bool isCheck = false;
+
+        PromptSelectionOptions pso = new PromptSelectionOptions();
+        pso.MessageForAdding = "\nSelect Blocks: ";
+        var filters = new TypedValue[] { new TypedValue((int)DxfCode.Start, "INSERT") };
+        SelectionFilter filter = new SelectionFilter(filters);
+        PromptSelectionResult psr = doc.Editor.GetSelection(pso, filter);
+        if (psr.Status != PromptStatus.OK) { return null; }
+
+        using (doc.LockDocument())
+        using(Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            foreach (SelectedObject s in psr.Value)
+            {
+                var br = (BlockReference)tr.GetObject(s.ObjectId, OpenMode.ForRead);
+                var btr = (BlockTableRecord)tr.GetObject(br.BlockTableRecord, OpenMode.ForRead);
+                var blockName = string.Empty;
+                var fileName = string.Empty;
+
+                //if (btr.IsFromExternalReference)
+                //{
+                //    db.ResolveXrefs(true, false);
+                //    foreach (var i in btr)
+                //    {
+                //        var ent = (Entity)tr.GetObject(i, OpenMode.ForRead);
+                //        if (ent != null && ent is BlockReference inBr)
+                //        {
+                //            var targetBtr = (BlockTableRecord)tr.GetObject(inBr.BlockTableRecord, OpenMode.ForRead);
+
+                //            foreach (var id in targetBtr)
+                //            {
+                //                var targetEnt = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                //                if(targetEnt!=null && targetEnt is Polyline pl && pl.NumberOfVertices ==4)
+                //                {
+                //                    string[] splitName = inBr.Name.Split('|');
+                //                    blockName = splitName[1];
+                //                    fileName = splitName[0];
+                //                    break;
+                //                }
+                //            }
+                //        }
+                //    }
+                //}else
+                //{
+                    foreach(var i in btr)
+                    {
+                        var ent = (Entity)tr.GetObject(i, OpenMode.ForRead);
+                        if(ent!=null&&ent is Polyline pl && pl.NumberOfVertices == 4)
+                        {
+                            blockName = btr.Name;
+                            fileName = System.IO.Path.GetFileName(doc.Name);
+                            break;
+                        }
+                    }
+                //}
+
+                for (int i = 0; i < blocks.Count; i++)
+                {
+                    if (blocks[i].BlockName.Equals(blockName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        isCheck = true;
+                    }
+                }
+                if (!isCheck)
+                    blocks.Add(new BlockClass(blockName, fileName));
+            }
+        }
+        return blocks;
+    }
+    public static List<string> GetPrinterDeviceNames()
+    {
+        PlotConfigManager.RefreshList(RefreshCode.All);
+        PlotSettingsValidator psv = PlotSettingsValidator.Current;
+
+        var printList = psv.GetPlotDeviceList().Cast<string>().ToList();
+
+        return printList;
+    }
+    public static List<string> GetPrinterPaperSizes(string deviceName)
+    {
+        PlotConfig pc = PlotConfigManager.SetCurrentConfig(deviceName);
+        List<string> l = new List<string>();
+
+        if (deviceName == "없음" || deviceName == "None") return l;
+        foreach(var p in pc.CanonicalMediaNames)
+        {
+            l.Add(p);
+        }
+
+
+        return l;
+    }
+    public static List<string> GetPrinterStyleNames()
+    {
+        PlotConfigManager.RefreshList(RefreshCode.All);
+        PlotSettingsValidator psv = PlotSettingsValidator.Current;
+
+        var ctbList = psv.GetPlotStyleSheetList().Cast<string>().ToList();
+
+        return ctbList;
+    }
+    //public static void ListPrinters()
+    //{
+    //    Document doc = Application.DocumentManager.MdiActiveDocument;
+    //    Database db = doc.Database;
+
+    //    PlotConfigManager.RefreshList(RefreshCode.All);
+    //    PlotConfig pc = PlotConfigManager.SetCurrentConfig("DWG To PDF.pc3");
+    //    pc.RefreshMediaNameList();
+    //    PlotSettingsValidator psv = PlotSettingsValidator.Current;
+    //    //PlotSettings ps = new PlotSettings(true);
+
+    //    var printList = psv.GetPlotDeviceList().Cast<string>().ToList();
+    //    var ctbList = psv.GetPlotStyleSheetList().Cast<string>().ToList();
+    //    printList.ForEach(p => doc.Editor.WriteMessage("\n\t print: {0}", p));
+    //    ctbList.ForEach(p => doc.Editor.WriteMessage("\n\t ctb: {0}", p));
+    //    foreach(var p in pc.CanonicalMediaNames)
+    //    {
+    //        doc.Editor.WriteMessage("\n\t size: {0}", p);
+    //    }
+    //    //var paperList = psv.GetCanonicalMediaNameList(ps).Cast<string>().ToList();
+    //    //paperList.ForEach(p => doc.Editor.WriteMessage("\n\t size: {0}", p));
+    //}
+    #endregion
 }

@@ -286,6 +286,7 @@ namespace Auto_Foundation.Figure.Model
             Point3d pp14 = new Point3d(pp9.X, pp13.Y, 0);
             Point3d pp15 = new Point3d(pCenter.X - TopFDNLength / 2, pp12.Y, 0);
             Point3d pp16 = new Point3d(pp15.X, pp11.Y, 0);
+            ClCAD.SetLayerCurrent("TOPFDN");
             ClCAD.CreatePolylineFromListPoints
             (
                 new List<Point3d> { pp9, pp10, pp11, pp12, pp13, pp14, pp15, pp16 },
@@ -337,7 +338,7 @@ namespace Auto_Foundation.Figure.Model
             ClCAD.CreateDimension_Y(dsY, 25, 1);
             #endregion
 
-            ClCAD.ZoomAll();
+            //ClCAD.ZoomAll();
         }
         #endregion
     }

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 
-31390545406
+51007211897
 
-18-254767897
-211243698013
-Figure\View\CombineWindow.xaml;Figure\View\LineView.xaml;Figure\View\SettingView.xaml;
+28717794736
+23694819049
+Figure\FigureResource\Styles.xaml;Figure\View\CombineWindow.xaml;Figure\View\LineView.xaml;Figure\View\MultiPlot.xaml;Figure\View\SettingView.xaml;
 
 False
 

@@ -58,6 +58,12 @@
       <HintPath>C:\Program Files\Autodesk\AutoCAD 2022\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -81,11 +87,17 @@
   <ItemGroup>
     <Compile Include="Constants\Constans.cs" />
     <Compile Include="Figure\Canvas\DrawCanvas.cs" />
+    <Compile Include="Figure\Class\BlockClass.cs" />
+    <Compile Include="Figure\Class\DrawClass.cs" />
+    <Compile Include="Figure\Class\PointClass.cs" />
     <Compile Include="Figure\Command.cs" />
+    <Compile Include="Figure\Model\MultiPlotSettingModel.cs" />
     <Compile Include="Figure\Model\OctagonModel.cs" />
+    <Compile Include="Figure\Model\SetLayerModel.cs" />
     <Compile Include="Figure\Model\SettingModel.cs" />
     <Compile Include="Figure\ViewModel\CombineViewModel.cs" />
     <Compile Include="Figure\ViewModel\LineViewModel.cs" />
+    <Compile Include="Figure\ViewModel\MultiPlotViewModel.cs" />
     <Compile Include="Figure\ViewModel\SettingViewModel.cs" />
     <Compile Include="Figure\View\CombineWindow.xaml.cs">
       <DependentUpon>CombineWindow.xaml</DependentUpon>
@@ -93,13 +105,19 @@
     <Compile Include="Figure\View\LineView.xaml.cs">
       <DependentUpon>LineView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Figure\View\MultiPlot.xaml.cs">
+      <DependentUpon>MultiPlot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Figure\View\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Library\Assistant.cs" />
     <Compile Include="Library\BaseViewModel.cs" />
+    <Compile Include="Library\BoolToVisibliityConverter.cs" />
     <Compile Include="Library\ClCAD.cs" />
     <Compile Include="Library\FindChildClass.cs" />
     <Compile Include="Library\RelayCommand.cs" />
+    <Compile Include="Library\WorkingDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,11 +146,19 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Page Include="Figure\FigureResource\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Figure\View\CombineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Figure\View\LineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Figure\View\MultiPlot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

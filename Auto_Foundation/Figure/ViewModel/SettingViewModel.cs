@@ -112,7 +112,6 @@ namespace Auto_Foundation.Figure.ViewModel
                 OctagonModel.SettingModel.BottomFDNHeight, OctagonModel.SettingModel.TopFDNHeight, OctagonModel.SettingModel.Depth);
             DrawCanvas.DrawPlan(uc.Plan, OctagonModel.SettingModel.BottomFDNLength, OctagonModel.SettingModel.TopFDNLength,
                 OctagonModel.SettingModel.BottomFDNCenter, OctagonModel.SettingModel.TopFDNCenter, OctagonModel.SettingModel.BCDCircle);
-                
         }
     }
 }

@@ -1,0 +1,276 @@
+﻿<Window x:Class="Auto_Foundation.Figure.View.MultiPlot"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auto_Foundation.Figure.View"
+        mc:Ignorable="d"
+        Title="다중 플롯" Height="700" Width="600"
+        xmlns:viewModel="clr-namespace:Auto_Foundation.Figure.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        FontSize="11"
+        FontFamily="Tohoma"
+        WindowStyle="SingleBorderWindow"
+        AllowsTransparency="False" x:Name="MultiPlotWindow"
+        Background="LightGray"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="isVisible" />
+                </ResourceDictionary>
+                <ResourceDictionary Source="D:/test/repos/training/Auto_Foundation/Auto_Foundation/Figure/FigureResource/Styles.xaml">
+                    <DataTemplate x:Name="multiPlotViewModel" DataType="{x:Type viewModel:MultiPlotViewModel}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadSettingViewCommand}"
+                                CommandParameter="{Binding ElementName=MultiPlotWindow}">
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="320"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="기본 설정" Grid.Row="0" Grid.Column="0" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <!--#region 프린터-->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="프린터: " VerticalAlignment="Center" />
+                <ComboBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                          SelectedItem="{Binding MultiPlotSettingModel.DeviceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding MultiPlotSettingModel.DeviceNames}"
+                          >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DeviceName_SelectionChanged_Command}"
+                                                    CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <!--#endregion-->
+                <!--#region 용지-->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="용지: " VerticalAlignment="Center" />
+                <ComboBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"  
+                          SelectedItem="{Binding MultiPlotSettingModel.PaperSizeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding MultiPlotSettingModel.PaperSizeNames}"
+                          />
+                <!--#endregion-->
+                <!--#region 스타일-->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="스타일: " VerticalAlignment="Center" />
+                <ComboBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" 
+                          SelectedItem="{Binding MultiPlotSettingModel.StyleName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding MultiPlotSettingModel.StyleNames}"
+                          />
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="도곽 리스트" Grid.Row="1" Grid.Column="0" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <!--#region 도곽리스트, 버튼-->
+                <ListView Grid.Row="0" Grid.Column="0" Name="blockListView"
+                          ItemsSource="{Binding MultiPlotSettingModel.BlockList}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="파일명" Width="400" DisplayMemberBinding="{Binding FileName}"/>
+                            <GridViewColumn Header="블록명" Width="150" DisplayMemberBinding="{Binding BlockName}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button Content="도곽, 특정 블록 등록" Grid.Row="1" Grid.Column="0"
+                        VerticalAlignment="Center" Height="25" 
+                        Command="{Binding BlockSetBtnCommand}"
+                        CommandParameter="{Binding ElementName=MultiPlotWindow}"
+                        />
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="도면 리스트" Grid.Row="2" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+                <!--#region 도면 리스트-->
+                <ListView Grid.Column="0" Name="drawingListView" 
+                          ItemsSource="{Binding MultiPlotSettingModel.DrawingList}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="파일명" Width="300" DisplayMemberBinding="{Binding DwgName}" />
+                            <GridViewColumn Header="플롯스타일" Width="150" DisplayMemberBinding="{Binding PlotStyle}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <!--#endregion-->
+                <!--#region 도면 추가 버튼-->
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <!--#region 현재도면추가-->
+                    <!--<TextBlock Grid.Row="0" Grid.Column="1" Text="현재 도면" VerticalAlignment="Center"
+                               Style="{DynamicResource TextBlockStyle}">
+                         <i:Interaction.Triggers>
+                             <i:EventTrigger EventName="MouseLeftButtonDown">
+                                 <i:InvokeCommandAction Command="{Binding CurDrawing_Add_Command}"
+                                                        CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                                 </i:InvokeCommandAction>
+                             </i:EventTrigger>
+                         </i:Interaction.Triggers>
+                    </TextBlock>-->
+                    <!--#endregion-->
+                    <!--#region 도면추가-->
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="도면 추가" VerticalAlignment="Center"
+                               Style="{DynamicResource TextBlockStyle}">
+                         <i:Interaction.Triggers>
+                             <i:EventTrigger EventName="MouseLeftButtonDown">
+                                 <i:InvokeCommandAction Command="{Binding Drawing_Add_Command}"
+                                                        CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                                 </i:InvokeCommandAction>
+                             </i:EventTrigger>
+                         </i:Interaction.Triggers>
+                    </TextBlock>
+                    <!--#endregion-->
+                    <!--#region 폴더추가-->
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="폴더 추가" VerticalAlignment="Center" 
+                               Style="{DynamicResource TextBlockStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding DrawingFolder_Add_Command}"
+                                                       CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBlock>
+                    <!--#endregion-->
+                </Grid>
+                <!--#endregion-->
+                <!--#region 현재도면 체크박스-->
+                <Grid Grid.Row="1" Grid.Column="0" Margin="3">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <CheckBox IsChecked="{Binding MultiPlotSettingModel.IsCurrentDrawing, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="현재 도면" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding CurrentDrawingCheckCommand}"
+                                                           CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBlock>
+                        <CheckBox Margin="20,0,0,0" 
+                                  IsChecked="{Binding MultiPlotSettingModel.IsCombineEachFile, 
+                                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  />
+                        <TextBlock Text="파일별 PDF 병합" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding CombinePDFEachFileCommand}"
+                                                           CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBlock>
+                    </StackPanel>
+                </Grid>
+                <!--#endregion-->
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="3" Grid.Column="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding MultiPlotSettingModel.IsCombinePDF, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="PDF 병합" VerticalAlignment="Center">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding PDFCombineCheckCommand}"
+                                               CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>
+            <!--<CheckBox Grid.Row="0" Grid.Column="2" IsChecked="{Binding MultiPlotSettingModel.IsPDFDelete, 
+                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
+                      Margin="20,0,0,0"
+                      Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
+                      />
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="병합 후 개별 PDF 삭제" VerticalAlignment="Center"
+                       Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
+                >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding PDFDeleteCheckCommand}"
+                                               CommandParameter="{Binding ElementName=MultiPlotWindow}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBlock>-->
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="병합 PDF 파일명: "
+                       VerticalAlignment="Center"
+                       Margin="20,0,0,0"
+                       Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
+                       />
+            <TextBox Grid.Row="0" Grid.Column="3" 
+                     Width="200" Height="20" 
+                     HorizontalAlignment="Left" VerticalAlignment="Center"
+                     Text="{Binding MultiPlotSettingModel.MergePDFName, 
+                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
+                     />
+        </Grid>
+        <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+            Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="플롯" Margin="5" Height="30" Width="100"
+                    Command="{Binding PlotBtnCommand}"
+                    CommandParameter="{Binding ElementName=MultiPlotWindow}"/>
+            <Button Content="취소" Margin="5" Height="30" Width="100" 
+                    IsCancel="True"
+                    Command="{Binding CancelBtnCommand}"
+                    CommandParameter="{Binding ElementName=MultiPlotWindow}"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -109,21 +109,6 @@
                          Text="{Binding OctagonModel.SettingModel.Depth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0"/>
                 <!--#endregion-->
-                <!--#region BCD Radius-->
-                <!--<TextBlock Grid.Row="7" Grid.Column="0" Text="B.C.D Radius:" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="7" Grid.Column="1" 
-                         Text="{Binding OctagonModel.SettingModel.BCDCircle, Mode=TwoWay, 
-                                UpdateSourceTrigger=PropertyChanged}"
-                         VerticalAlignment="Center" TextAlignment="Right" Margin="5,0,0,0">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="TextChanged">
-                            <i:InvokeCommandAction Command="{Binding BCDCircle_TextChanged_Command}"
-                                                    CommandParameter="{Binding ElementName=MainWindow}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </TextBox>-->
-                <!--#endregion-->
                 <!--#region X-->
                 <TextBlock Grid.Row="8" Grid.Column="0" Text="X:" VerticalAlignment="Center"/>
                 <TextBox Grid.Row="8" Grid.Column="1" IsReadOnly="True" Background="LightGray"
