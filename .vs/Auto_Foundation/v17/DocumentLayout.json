@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\class\\blockclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\class\\blockclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -30,11 +34,23 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Assistant.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\Assistant.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
+              "RelativeToolTip": "Auto_Foundation\\Library\\Assistant.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-16T02:26:39.835Z"
             },
             {
               "$type": "Document",
@@ -44,14 +60,14 @@
               "RelativeDocumentMoniker": "Auto_Foundation\\Library\\ClCAD.cs",
               "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
               "RelativeToolTip": "Auto_Foundation\\Library\\ClCAD.cs",
-              "ViewState": "AQIAAGYDAAAAAAAAAAAQwIEDAAAJAAAA",
+              "ViewState": "AQIAAAkAAAAAAAAAAAAAAFUBAAAwAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-10T00:05:43.518Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "BlockClass.cs",
               "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Class\\BlockClass.cs",
               "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Class\\BlockClass.cs",
@@ -63,7 +79,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "MultiPlotSettingModel.cs",
               "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
               "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
@@ -75,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "MultiPlotViewModel.cs",
               "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
               "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
@@ -87,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MultiPlot.xaml",
               "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
               "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
