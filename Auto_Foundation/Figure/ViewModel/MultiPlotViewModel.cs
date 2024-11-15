@@ -29,6 +29,9 @@ namespace Auto_Foundation.Figure.ViewModel
         public ICommand CurrentDrawingCheckCommand { get; set; }
         public ICommand PDFCombineCheckCommand { get; set; }
         public ICommand CombinePDFEachFileCommand { get; set; }
+        public ICommand DirectorySetBtnCommand { get; set; }
+        public ICommand Directory_Changed_Command { get; set; }
+        
         # endregion
         public MultiPlotViewModel()
         {
@@ -155,44 +158,44 @@ namespace Auto_Foundation.Figure.ViewModel
                 var blocks = MultiPlotSettingModel.BlockList;
                 var currentPath = ClCAD.GetCurrentDocName();
                 var currentDWGName = Path.GetFileNameWithoutExtension(currentPath);
-                if (MultiPlotSettingModel.IsCurrentDrawing) list.Add(new DrawClass(currentDWGName, style, currentPath));
-                p.Hide();
-                //if(device == "None" || device == "없음")
-                //{
-                //    MessageBox.Show("프린터를 선택하십시요.");
-                //}
-                //else
-                //{
-                //    if(paper ==null || paper == "")
-                //    {
-                //        MessageBox.Show("용지를 선택하십시요.");
-                //    }
-                //    else
-                //    {
-                    foreach (var b in blocks)
+                list.Add(new DrawClass(currentDWGName, style, currentPath));
+
+                if(device == "None" || device == "없음")
+                {
+                    MessageBox.Show("프린터를 선택하십시요.");
+                }
+                else
+                {
+                    if (paper == null || paper == "")
                     {
-                        foreach (var o in list)
+                        MessageBox.Show("용지를 선택하십시요.");
+                    }
+                    else
+                    {
+                        p.Hide();
+                        foreach (var b in blocks)
                         {
-                            List<string> pdfPath = 
-                                ClCAD.SearchObjectByBlock(
-                                    o, 
-                                    b.BlockName, 
-                                    device, 
-                                    paper, 
-                                    style,
-                                    MultiPlotSettingModel.IsCombineEachFile
-                                    );
-                            if (pdfPath.Count > 0)
+                            foreach (var o in list)
                             {
-                                foreach(var path in pdfPath)
+                                List<string> pdfPath = 
+                                    ClCAD.SearchObjectByBlock(
+                                        o, 
+                                        b.BlockName, 
+                                        device, 
+                                        paper, 
+                                        style
+                                        );
+                                if (pdfPath.Count > 0)
                                 {
-                                    pdfPaths.Add(path);
+                                    foreach(var path in pdfPath)
+                                    {
+                                        pdfPaths.Add(path);
+                                    }
                                 }
                             }
                         }
                     }
-                //        }
-                //    }
+                }
                 if (pdfPaths.Count > 1 && MultiPlotSettingModel.IsCombinePDF)
                 {
                     var dir = Path.GetDirectoryName(pdfPaths[0]);
@@ -211,13 +214,49 @@ namespace Auto_Foundation.Figure.ViewModel
             {
                MultiPlotSettingModel.IsCombinePDF = !MultiPlotSettingModel.IsCombinePDF;
             });
-            CurrentDrawingCheckCommand = new RelayCommand<MultiPlot>((p) => { return true; }, (p) =>
-            {
-                MultiPlotSettingModel.IsCurrentDrawing = !MultiPlotSettingModel.IsCurrentDrawing;
-            });
+            //CurrentDrawingCheckCommand = new RelayCommand<MultiPlot>((p) => { return true; }, (p) =>
+            //{
+            //    var style = MultiPlotSettingModel.StyleName;
+            //    var list = MultiPlotSettingModel.DrawingList;
+            //    var currentPath = ClCAD.GetCurrentDocName();
+            //    var currentDWGName = Path.GetFileNameWithoutExtension(currentPath);
+            //    if (MultiPlotSettingModel.IsCurrentDrawing) list.Add(new DrawClass(currentDWGName, style, currentPath));
+            //    else list.Remove(list.Where(i => i.DwgName == currentDWGName).Single());
+            //    MultiPlotSettingModel.IsCurrentDrawing = !MultiPlotSettingModel.IsCurrentDrawing;
+            //});
             CombinePDFEachFileCommand = new RelayCommand<MultiPlot>((p) => { return true; }, (p) =>
             {
                 MultiPlotSettingModel.IsCombineEachFile = !MultiPlotSettingModel.IsCombineEachFile;
+            });
+            DirectorySetBtnCommand = new RelayCommand<MultiPlot>((p) => { return true; }, (p) =>
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.Description = "경로를 선택하세요.";
+                fbd.ShowNewFolderButton = true;
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result != DialogResult.OK && string.IsNullOrWhiteSpace(fbd.SelectedPath)) return;
+
+                // Get the selected folder path
+                string selectedFolderPath = fbd.SelectedPath;
+                MultiPlotSettingModel.SelectedDirectory = selectedFolderPath;
+            });
+            Directory_Changed_Command = new RelayCommand<MultiPlot>((p) => { return true; }, (p) =>
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.Description = "경로를 선택하세요.";
+                fbd.ShowNewFolderButton = true;
+
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    MessageBox.Show("here");
+                    // Get the selected folder path
+                    string selectedFolderPath = fbd.SelectedPath;
+                    MultiPlotSettingModel.SelectedDirectory = selectedFolderPath;
+                }
             });
         }
     }

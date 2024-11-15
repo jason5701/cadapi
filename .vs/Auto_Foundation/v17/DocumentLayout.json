@@ -3,28 +3,60 @@
   "WorkspaceRootPath": "D:\\test\\repos\\training\\Auto_Foundation\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|d:\\test\\repos\\training\\auto_foundation\\auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|d:\\test\\repos\\training\\auto_foundation\\auto_foundation\\figure\\viewmodel\\setalignedtabletextviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\viewmodel\\setalignedtabletextviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\clcad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\view\\setalignedtabletext.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\view\\setalignedtabletext.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\class\\blockclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\class\\blockclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\view\\xclipwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\view\\xclipwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\multiplotsettingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\multiplotsettingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\setalignedtabletextmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\setalignedtabletextmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\command.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\dragmove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\dragmove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\viewmodel\\xclipviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\viewmodel\\xclipviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\xclipmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\xclipmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\setlayermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\setlayermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\viewmodel\\multiplotviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\viewmodel\\multiplotviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\view\\multiplot.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\view\\multiplot.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\library\\assistant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\settingmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|D:\\test\\repos\\training\\Auto_Foundation\\auto_foundation\\figure\\model\\octagonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5DBE446-A767-4FE5-ABB8-01EF6C283D4B}|Auto_Foundation\\Auto_Foundation.csproj|solutionrelative:auto_foundation\\figure\\model\\octagonmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +66,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,75 +74,170 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Assistant.cs",
-              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
-              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\Assistant.cs",
-              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
-              "RelativeToolTip": "Auto_Foundation\\Library\\Assistant.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACIAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-16T02:26:39.835Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClCAD.cs",
-              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
-              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\ClCAD.cs",
-              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
-              "RelativeToolTip": "Auto_Foundation\\Library\\ClCAD.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAFUBAAAwAAAA",
+              "Title": "SetAlignedTableTextViewModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\SetAlignedTableTextViewModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\SetAlignedTableTextViewModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\SetAlignedTableTextViewModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\ViewModel\\SetAlignedTableTextViewModel.cs",
+              "ViewState": "AgIAABIAAAAAAAAAAAAswEgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-10T00:05:43.518Z",
+              "WhenOpened": "2024-11-11T05:44:26.741Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BlockClass.cs",
-              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Class\\BlockClass.cs",
-              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Class\\BlockClass.cs",
-              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Class\\BlockClass.cs",
-              "RelativeToolTip": "Auto_Foundation\\Figure\\Class\\BlockClass.cs",
-              "ViewState": "AQIAAAEAAAAAAAAAAAAiwAAAAAAAAAAA",
+              "DocumentIndex": 8,
+              "Title": "XclipModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\XclipModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\XclipModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\XclipModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\XclipModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-08T07:11:13.085Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MultiPlotSettingModel.cs",
-              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
-              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
-              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
-              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\MultiPlotSettingModel.cs",
-              "ViewState": "AQIAAEEAAAAAAAAAAAAiwGAAAAAiAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T08:55:47.475Z"
+              "WhenOpened": "2024-11-11T05:43:32.17Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+              "Title": "SetAlignedTableTextModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SetAlignedTableTextModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\SetAlignedTableTextModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SetAlignedTableTextModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\SetAlignedTableTextModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwCYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-11T05:43:29.272Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SetAlignedTableText.xaml",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\SetAlignedTableText.xaml",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\SetAlignedTableText.xaml",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\SetAlignedTableText.xaml",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\View\\SetAlignedTableText.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-11-11T05:25:45.05Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "SetLayerModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SetLayerModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\SetLayerModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SetLayerModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\SetLayerModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-04T07:53:47.923Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DragMove.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\DragMove.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\DragMove.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\DragMove.cs",
+              "RelativeToolTip": "Auto_Foundation\\Library\\DragMove.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-31T05:31:02.002Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "XclipViewModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\XclipViewModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\XclipViewModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\XclipViewModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\ViewModel\\XclipViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-29T01:57:52.767Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "MultiPlotViewModel.cs",
               "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
               "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
               "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
               "RelativeToolTip": "Auto_Foundation\\Figure\\ViewModel\\MultiPlotViewModel.cs",
-              "ViewState": "AQIAAGYAAAAAAAAAAAAkwI0AAABaAAAA",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T05:24:27.398Z"
+              "WhenOpened": "2024-10-29T00:51:23.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SettingModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\SettingModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-29T00:51:10.083Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "XClipWindow.xaml",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\XClipWindow.xaml",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\XClipWindow.xaml",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\XClipWindow.xaml",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\View\\XClipWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-10-28T04:02:36.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClCAD.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\ClCAD.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\ClCAD.cs",
+              "RelativeToolTip": "Auto_Foundation\\Library\\ClCAD.cs",
+              "ViewState": "AgIAABMHAAAAAAAAAAA7wNQHAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-08T00:39:28.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "OctagonModel.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Model\\OctagonModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-13T06:17:52.083Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "MultiPlot.xaml",
-              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
-              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
-              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
-              "RelativeToolTip": "Auto_Foundation\\Figure\\View\\MultiPlot.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-04-15T07:14:04.092Z"
+              "Title": "Command.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Command.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Figure\\Command.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Figure\\Command.cs",
+              "RelativeToolTip": "Auto_Foundation\\Figure\\Command.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwEAAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-19T04:35:36.223Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Assistant.cs",
+              "DocumentMoniker": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
+              "RelativeDocumentMoniker": "Auto_Foundation\\Library\\Assistant.cs",
+              "ToolTip": "D:\\test\\repos\\training\\Auto_Foundation\\Auto_Foundation\\Library\\Assistant.cs",
+              "RelativeToolTip": "Auto_Foundation\\Library\\Assistant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-16T02:26:39.835Z"
             }
           ]
         }

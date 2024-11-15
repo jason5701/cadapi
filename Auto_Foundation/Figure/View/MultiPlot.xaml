@@ -23,7 +23,7 @@
                 <ResourceDictionary>
                     <BooleanToVisibilityConverter x:Key="isVisible" />
                 </ResourceDictionary>
-                <ResourceDictionary Source="D:/test/repos/training/Auto_Foundation/Auto_Foundation/Figure/FigureResource/Styles.xaml">
+                <ResourceDictionary >
                     <DataTemplate x:Name="multiPlotViewModel" DataType="{x:Type viewModel:MultiPlotViewModel}"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
@@ -97,7 +97,7 @@
                 </Grid.RowDefinitions>
                 <!--#region 도곽리스트, 버튼-->
                 <ListView Grid.Row="0" Grid.Column="0" Name="blockListView"
-                          ItemsSource="{Binding MultiPlotSettingModel.BlockList}">
+                          ItemsSource="{Binding MultiPlotSettingModel.BlockList}" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="파일명" Width="400" DisplayMemberBinding="{Binding FileName}"/>
@@ -125,7 +125,7 @@
                 </Grid.ColumnDefinitions>
                 <!--#region 도면 리스트-->
                 <ListView Grid.Column="0" Name="drawingListView" 
-                          ItemsSource="{Binding MultiPlotSettingModel.DrawingList}">
+                          ItemsSource="{Binding MultiPlotSettingModel.DrawingList}" d:ItemsSource="{d:SampleData ItemCount=5}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="파일명" Width="300" DisplayMemberBinding="{Binding DwgName}" />
@@ -134,7 +134,6 @@
                     </ListView.View>
                 </ListView>
                 <!--#endregion-->
-                <!--#region 도면 추가 버튼-->
                 <Grid Grid.Row="0" Grid.Column="1" Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
@@ -145,18 +144,6 @@
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="auto"/>
                     </Grid.ColumnDefinitions>
-                    <!--#region 현재도면추가-->
-                    <!--<TextBlock Grid.Row="0" Grid.Column="1" Text="현재 도면" VerticalAlignment="Center"
-                               Style="{DynamicResource TextBlockStyle}">
-                         <i:Interaction.Triggers>
-                             <i:EventTrigger EventName="MouseLeftButtonDown">
-                                 <i:InvokeCommandAction Command="{Binding CurDrawing_Add_Command}"
-                                                        CommandParameter="{Binding ElementName=MultiPlotWindow}">
-                                 </i:InvokeCommandAction>
-                             </i:EventTrigger>
-                         </i:Interaction.Triggers>
-                    </TextBlock>-->
-                    <!--#endregion-->
                     <!--#region 도면추가-->
                     <TextBlock Grid.Row="0" Grid.Column="1" Text="도면 추가" VerticalAlignment="Center"
                                Style="{DynamicResource TextBlockStyle}">
@@ -182,11 +169,10 @@
                     </TextBlock>
                     <!--#endregion-->
                 </Grid>
-                <!--#endregion-->
-                <!--#region 현재도면 체크박스-->
+                <!--#region 현재도면, 파일별 PDF 병합 체크박스-->
                 <Grid Grid.Row="1" Grid.Column="0" Margin="3">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <CheckBox IsChecked="{Binding MultiPlotSettingModel.IsCurrentDrawing, 
+                        <!--<CheckBox IsChecked="{Binding MultiPlotSettingModel.IsCurrentDrawing, 
                             Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="현재 도면" >
                             <i:Interaction.Triggers>
@@ -196,12 +182,10 @@
                                     </i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBlock>
-                        <CheckBox Margin="20,0,0,0" 
-                                  IsChecked="{Binding MultiPlotSettingModel.IsCombineEachFile, 
-                                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  />
-                        <TextBlock Text="파일별 PDF 병합" >
+                        </TextBlock>-->
+                        <CheckBox IsChecked="{Binding MultiPlotSettingModel.IsCombineEachFile, 
+                            Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="파일별 PDF 병합" VerticalAlignment="Center">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding CombinePDFEachFileCommand}"
@@ -220,6 +204,10 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <CheckBox Grid.Row="0" Grid.Column="0" IsChecked="{Binding MultiPlotSettingModel.IsCombinePDF, 
@@ -233,34 +221,34 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <!--<CheckBox Grid.Row="0" Grid.Column="2" IsChecked="{Binding MultiPlotSettingModel.IsPDFDelete, 
-                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"
-                      Margin="20,0,0,0"
-                      Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
-                      />
-            <TextBlock Grid.Row="0" Grid.Column="3" Text="병합 후 개별 PDF 삭제" VerticalAlignment="Center"
-                       Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
-                >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding PDFDeleteCheckCommand}"
-                                               CommandParameter="{Binding ElementName=MultiPlotWindow}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </TextBlock>-->
             <TextBlock Grid.Row="0" Grid.Column="2" Text="병합 PDF 파일명: "
                        VerticalAlignment="Center"
                        Margin="20,0,0,0"
                        Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
                        />
             <TextBox Grid.Row="0" Grid.Column="3" 
-                     Width="200" Height="20" 
+                     Width="120" Height="20" 
                      HorizontalAlignment="Left" VerticalAlignment="Center"
                      Text="{Binding MultiPlotSettingModel.MergePDFName, 
                         Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      Visibility="{Binding MultiPlotSettingModel.IsCombinePDF, Converter={StaticResource isVisible}}"
                      />
+            <TextBlock Grid.Column="4" Text="저장폴더: "
+           VerticalAlignment="Center" Margin="20,0,0,0"
+           />
+            <Button Content="경로" Grid.Row="0" Grid.Column="5"
+                VerticalAlignment="Center" Height="20" 
+                Command="{Binding DirectorySetBtnCommand}"
+                CommandParameter="{Binding ElementName=MultiPlotWindow}"
+            />
+            <TextBox
+                Grid.Row="0" Grid.Column="6" Height="20"
+                VerticalAlignment="Center" Width="120"
+                IsReadOnly="True"
+                Text="{Binding MultiPlotSettingModel.SelectedDirectory, 
+                        Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Margin="5,0,0,0"
+                />
         </Grid>
         <StackPanel Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
             Orientation="Horizontal" HorizontalAlignment="Right">

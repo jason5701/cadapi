@@ -1,8 +1,8 @@
 
 
-내부 오류:  !dbobji.cpp@8673: eNotOpenForWrite
+치명적 오류:  Unhandled Access Violation Reading 0x0000 Exception at 2C248AFh
 
-04/11/2024 at 12:50:18.000  도면: Drawing1.dwg
+10/23/2024 at 16:18:27.000  도면: Drawing1.dwg
 -------------
-\SHAHEEN-2112-CI-EFD-2010_0_STEAM CRACKER COMPLEX EQUIPMENT (D-211219ABC) FOUNDATION DETAILS (1).dwg
+AM CRACKER COMPLEX EQUIPMENT (D-211219ABC) FOUNDATION DETAILS (1).dwg
 -------------

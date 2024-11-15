@@ -1,11 +1,14 @@
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.csproj.AssemblyReference.cache
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\FigureResource\Styles.baml
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\ChangeLayers.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\CombineWindow.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\LineView.g.cs
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\MultiPlot.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\SettingView.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation_MarkupCompile.cache
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation_MarkupCompile.lref
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\XClipWindow.g.cs
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Auto_Foundation.dll.config
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Auto_Foundation.dll
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Auto_Foundation.pdb
@@ -15,11 +18,12 @@ D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Microsoft.Xaml.
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\itextsharp.xml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Microsoft.Xaml.Behaviors.pdb
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\Microsoft.Xaml.Behaviors.xml
-D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\MultiPlot.g.cs
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\ChangeLayers.baml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\CombineWindow.baml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\LineView.baml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\MultiPlot.baml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\SettingView.baml
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\XClipWindow.baml
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.g.resources
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.Properties.Resources.resources
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.csproj.GenerateResource.cache
@@ -27,3 +31,6 @@ D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Fou.DBF72868.Up2Date
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.dll
 D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Auto_Foundation.pdb
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\bin\Debug\AcExportLayoutEx.dll
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\SetAlignedTableText.g.cs
+D:\test\repos\training\Auto_Foundation\Auto_Foundation\obj\Debug\Figure\View\SetAlignedTableText.baml

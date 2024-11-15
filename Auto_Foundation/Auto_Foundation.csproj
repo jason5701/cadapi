@@ -46,6 +46,9 @@
       <HintPath>C:\Program Files\Autodesk\AutoCAD 2022\acdbmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AcExportLayoutEx">
+      <HintPath>C:\Program Files\Autodesk\AutoCAD 2022\AcExportLayoutEx.dll</HintPath>
+    </Reference>
     <Reference Include="acmgd">
       <HintPath>C:\Program Files\Autodesk\AutoCAD 2022\acmgd.dll</HintPath>
       <Private>False</Private>
@@ -89,16 +92,26 @@
     <Compile Include="Figure\Canvas\DrawCanvas.cs" />
     <Compile Include="Figure\Class\BlockClass.cs" />
     <Compile Include="Figure\Class\DrawClass.cs" />
+    <Compile Include="Figure\Class\LayerClass.cs" />
     <Compile Include="Figure\Class\PointClass.cs" />
     <Compile Include="Figure\Command.cs" />
+    <Compile Include="Figure\Model\ChangeLayersSettingModel.cs" />
     <Compile Include="Figure\Model\MultiPlotSettingModel.cs" />
     <Compile Include="Figure\Model\OctagonModel.cs" />
+    <Compile Include="Figure\Model\SetAlignedTableTextModel.cs" />
     <Compile Include="Figure\Model\SetLayerModel.cs" />
     <Compile Include="Figure\Model\SettingModel.cs" />
+    <Compile Include="Figure\Model\XclipModel.cs" />
+    <Compile Include="Figure\ViewModel\ChangeLayersViewModel.cs" />
     <Compile Include="Figure\ViewModel\CombineViewModel.cs" />
     <Compile Include="Figure\ViewModel\LineViewModel.cs" />
     <Compile Include="Figure\ViewModel\MultiPlotViewModel.cs" />
+    <Compile Include="Figure\ViewModel\SetAlignedTableTextViewModel.cs" />
     <Compile Include="Figure\ViewModel\SettingViewModel.cs" />
+    <Compile Include="Figure\ViewModel\XclipViewModel.cs" />
+    <Compile Include="Figure\View\ChangeLayers.xaml.cs">
+      <DependentUpon>ChangeLayers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Figure\View\CombineWindow.xaml.cs">
       <DependentUpon>CombineWindow.xaml</DependentUpon>
     </Compile>
@@ -108,14 +121,23 @@
     <Compile Include="Figure\View\MultiPlot.xaml.cs">
       <DependentUpon>MultiPlot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Figure\View\SetAlignedTableText.xaml.cs">
+      <DependentUpon>SetAlignedTableText.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Figure\View\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Figure\View\XClipWindow.xaml.cs">
+      <DependentUpon>XClipWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Library\Assistant.cs" />
     <Compile Include="Library\BaseViewModel.cs" />
+    <Compile Include="Figure\Converter\InvertedBooleanConverter.cs" />
     <Compile Include="Library\BoolToVisibliityConverter.cs" />
     <Compile Include="Library\ClCAD.cs" />
+    <Compile Include="Library\DragMove.cs" />
     <Compile Include="Library\FindChildClass.cs" />
+    <Compile Include="Library\MoveJig.cs" />
     <Compile Include="Library\RelayCommand.cs" />
     <Compile Include="Library\WorkingDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -150,6 +172,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Figure\View\ChangeLayers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Figure\View\CombineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -162,7 +188,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Figure\View\SetAlignedTableText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Figure\View\SettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Figure\View\XClipWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

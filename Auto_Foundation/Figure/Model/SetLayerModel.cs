@@ -16,13 +16,25 @@ namespace Auto_Foundation.Figure.Model
             get { return _ss; }
             set { _ss = value; }
         }
-        public void SetLayersOnOff()
+        public void SetLayersOff()
         {
-
             ss = ClCAD.GetSelctionFromUser();
             if (ss != null)
             {
                 ClCAD.HideLayers(ss);
+            }
+            else
+            {
+                Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\nthere is no selection");
+                return;
+            }
+        }
+        public void SetLayerFrozen()
+        {
+            ss = ClCAD.GetSelctionFromUser();
+            if (ss != null)
+            {
+                ClCAD.FrozenLayers(ss);
             }
             else
             {
@@ -38,9 +50,5 @@ namespace Auto_Foundation.Figure.Model
         {
             ClCAD.GetXrefFilePath();
         }
-        //public void TestMethod()
-        //{
-        //    ClCAD.ListPrinters();
-        //}
     }
 }

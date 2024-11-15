@@ -1,0 +1,119 @@
+﻿<Window x:Class="Auto_Foundation.Figure.View.SetAlignedTableText"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Auto_Foundation.Figure.View"
+        mc:Ignorable="d"
+        Title="문자 정렬" Height="180" Width="300"
+        xmlns:viewModel="clr-namespace:Auto_Foundation.Figure.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="True"
+        FontSize="11"
+        FontFamily="Tohoma"
+        WindowStyle="SingleBorderWindow"
+        AllowsTransparency="False"
+        x:Name="SetAligned"
+        >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary>
+                    <BooleanToVisibilityConverter x:Key="isVisible" />
+                </ResourceDictionary>
+                <ResourceDictionary >
+                    <DataTemplate x:Name="setAlignedTableTextViewModel" DataType="{x:Type viewModel:SetAlignedTableTextViewModel}"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="정렬 옵션" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <!--<RowDefinition Height="3*"/>-->
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <RadioButton IsChecked="{Binding SetAlignedTableTextModel.LeftAligned}" Content="왼쪽 정렬"
+                                     Command="{Binding LeftAlignedCheckCommand}"
+                                     CommandParameter="{Binding ElementName=SetAligned}"/>
+
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <RadioButton IsChecked="{Binding SetAlignedTableTextModel.CenterAligned}" 
+                                     Content="가운데 정렬"
+                                     Command="{Binding CenterAlignedCheckCommand}"
+                                    CommandParameter="{Binding ElementName=SetAligned}"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <RadioButton IsChecked="{Binding SetAlignedTableTextModel.RightAligned}" 
+                                     Content="오른쪽 정렬" 
+                                     Command="{Binding RightAlignedCheckCommand}"
+                                     CommandParameter="{Binding ElementName=SetAligned}"/>
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="16,0,0,0"
+                               Text="정렬 점 ~ 표 선 사이 거리 : " 
+                               >
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SetAlignedTableTextModel.CenterAligned}" Value="True">
+                                        <Setter Property="Foreground" Value="DarkGray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                             IsReadOnly="{Binding SetAlignedTableTextModel.CenterAligned}"
+                             Text="{Binding SetAlignedTableTextModel.Space, 
+                                Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             PreviewTextInput="TextBox_PreviewTextInput"
+                             >
+                        <TextBox.Style>
+                            <Style TargetType="TextBox">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding SetAlignedTableTextModel.CenterAligned}" Value="True">
+                                        <Setter Property="Background" Value="DarkGray"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Height="30">
+            <Button Content="확인" Width="40"
+                    Command="{Binding SetAlignedTableTextConfirmCommand}"
+                    CommandParameter="{Binding ElementName=SetAligned}"/>
+            <Button Content="종료" Width="40" Margin="10,0,0,0"
+                    Command="{Binding SetAlignedTableTextCancelCommand}"
+                    CommandParameter="{Binding ElementName=SetAligned}"
+                    />
+        </StackPanel>
+    </Grid>
+</Window>

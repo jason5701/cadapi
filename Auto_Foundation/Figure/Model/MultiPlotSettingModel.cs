@@ -33,7 +33,6 @@ namespace Auto_Foundation.Figure.Model
             set { _PaperSizeName = value; OnPropertyChanged(); }
         }
         private string _StyleName;
-
         public string StyleName
         {
             get { return _StyleName; }
@@ -75,12 +74,12 @@ namespace Auto_Foundation.Figure.Model
             set { _DrawingList = value; OnPropertyChanged(); }
         }
 
-        private bool _IsCurrentDrawing;
-        public bool IsCurrentDrawing
-        {
-            get { return _IsCurrentDrawing; }
-            set { _IsCurrentDrawing = value; OnPropertyChanged(); }
-        }
+        //private bool _IsCurrentDrawing;
+        //public bool IsCurrentDrawing
+        //{
+        //    get { return _IsCurrentDrawing; }
+        //    set { _IsCurrentDrawing = value; OnPropertyChanged(); }
+        //}
         private bool _IsCombinePDF;
         public bool IsCombinePDF
         {
@@ -99,6 +98,12 @@ namespace Auto_Foundation.Figure.Model
             get { return _MergePDFName; }
             set { _MergePDFName = value; OnPropertyChanged(); }
         }
+        private string _SelectedDirectory;
+        public string SelectedDirectory
+        {
+            get { return _SelectedDirectory; }
+            set { _SelectedDirectory = value; OnPropertyChanged(); }
+        }
         public MultiPlotSettingModel()
         {
             var isCheck = Regex.IsMatch(ClCAD.GetPrinterDeviceNames()[0], @"^[a-zA-Z]+$");
@@ -110,10 +115,11 @@ namespace Auto_Foundation.Figure.Model
             StyleNames = ClCAD.GetPrinterStyleNames();
             BlockList = new ObservableCollection<BlockClass>();
             DrawingList = new ObservableCollection<DrawClass>();
-            IsCurrentDrawing = true;
+            //IsCurrentDrawing = true;
             IsCombineEachFile = false;
             IsCombinePDF = false;
             MergePDFName = string.Empty;
+            SelectedDirectory = "C:\\";
         }
     }
 }

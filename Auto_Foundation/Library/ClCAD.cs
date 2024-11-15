@@ -10,9 +10,34 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using Autodesk.AutoCAD.GraphicsInterface;
+using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
+using static iTextSharp.text.pdf.events.IndexEvents;
+using Autodesk.AutoCAD.Windows.Data;
+using Autodesk.AutoCAD.ExportLayout;
+using iTextSharp.text.pdf;
+using Autodesk.AutoCAD.DatabaseServices.Filters;
+using static RotateJig;
 
 public class ClCAD
 {
+    public static void SetLinetype(string linetype)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using(var tr = db.TransactionManager.StartTransaction())
+        {
+            var lt = (LinetypeTable)tr.GetObject(db.LinetypeTableId, OpenMode.ForRead);
+
+            if (!lt.Has(linetype)) 
+            {
+                db.LoadLineTypeFile(linetype, "acadiso.lin");
+            }
+
+            tr.Commit();
+        }
+    }
     public static void CreateBlock(Point3d pStart, string blockName)
     {
         var doc = Application.DocumentManager.MdiActiveDocument;
@@ -451,6 +476,112 @@ public class ClCAD
         if (ppr.Status != PromptStatus.OK) return null;// new Point3d(-111, -123, -147);
         else return ppr.Value;
     }
+    public static (Polyline, SelectionSet) GetRectangleBoundaryAndSelection(Editor ed)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        var promptPointResult = ed.GetPoint("\nFirst corner: ");
+        if (promptPointResult.Status == PromptStatus.OK)
+        {
+            var pt1 = promptPointResult.Value;
+            promptPointResult = ed.GetCorner("\nOpposite corner: ", pt1);
+            if (promptPointResult.Status == PromptStatus.OK)
+            {
+                var pt2 = promptPointResult.Value;
+                var centerPoint = new LineSegment3d(pt1, pt2).MidPoint;
+
+                Polyline rect = new Polyline(4);
+                rect.AddVertexAt(0, new Point2d(pt1.X, pt1.Y), 0, 0, 0);
+                rect.AddVertexAt(1, new Point2d(pt1.X, pt2.Y), 0, 0, 0);
+                rect.AddVertexAt(2, new Point2d(pt2.X, pt2.Y), 0, 0, 0);
+                rect.AddVertexAt(3, new Point2d(pt2.X, pt1.Y), 0, 0, 0);
+                rect.Closed = true;
+
+                var filter = new SelectionFilter(
+                new[] { new TypedValue(0, "LINE,ARC,CIRCLE,SPLINE,LWPOLYLINE,ELLIPSE") });
+                PromptSelectionResult psr = ed.SelectCrossingWindow(pt1, pt2, filter);
+
+                return psr.Status == PromptStatus.OK ? (rect, psr.Value) : (rect, null);
+            }
+        }
+        return (null, null);
+    }
+    public static SelectionSet GetObjectToClip(Editor ed)
+    {
+        PromptSelectionOptions pso = new PromptSelectionOptions();
+        pso.RejectObjectsFromNonCurrentSpace = true;
+        pso.RejectObjectsOnLockedLayers = true;
+        var filter = new SelectionFilter(
+           new[] { new TypedValue(0, "LINE,ARC,CIRCLE,SPLINE,LWPOLYLINE,ELLIPSE") });
+        var psr = ed.GetSelection(pso, filter);
+        return psr.Status == PromptStatus.OK ? psr.Value : null;
+    }
+    public static void ClipObjectCommand(double scale)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+        using(doc.LockDocument())
+        {
+            var (rectangleBoundary, selection) = GetRectangleBoundaryAndSelection(ed);
+            if (rectangleBoundary == null || selection == null)
+                return;
+
+            ObjectIdCollection copiedIds = new ObjectIdCollection();
+
+            Point3d basePoint = rectangleBoundary.GeometricExtents.MinPoint;
+            try
+            {
+                using (Transaction tr = doc.TransactionManager.StartTransaction())
+                {
+                    var btr = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
+
+                    foreach (ObjectId id in selection.GetObjectIds())
+                    {
+                        if (id != rectangleBoundary.ObjectId)
+                        {
+                            Entity originalEntity = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                            Entity clonedEntity = (Entity)originalEntity.Clone();
+                            btr.AppendEntity(clonedEntity);
+                            tr.AddNewlyCreatedDBObject(clonedEntity, true);
+                            
+                            copiedIds.Add(clonedEntity.ObjectId);
+
+                           
+
+                            using (Trimmer trimmer = new Autodesk.AutoCAD.ExportLayout.Trimmer())
+                            {
+                                trimmer.Trim(clonedEntity, rectangleBoundary);
+                                if (trimmer.HasAccurateResults)
+                                {
+                                    foreach (Entity ent in trimmer.TrimResultObjects)
+                                    {
+                                        ent.SetPropertiesFrom(clonedEntity);
+                                        btr.AppendEntity(ent);
+                                        tr.AddNewlyCreatedDBObject(ent, true);
+
+                                        copiedIds.Add(ent.ObjectId);
+                                    }
+                                    if (trimmer.EntityCompletelyOutside || trimmer.EntityOnBoundary)
+                                        clonedEntity.Erase();
+                                }
+                            }
+                        }
+                    }
+
+
+                    var ss = SelectionSet.FromObjectIds(copiedIds.Cast<ObjectId>().ToArray());
+                    DragMove drag = new DragMove(doc, ss, basePoint, scale);
+                    drag.DoDrag();
+
+                    tr.Commit();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                ed.WriteMessage("\nOperation failed ({0})", ex.Message);
+            }
+        }
+    }
     public static SelectionSet GetSelctionFromUser()
     {
         var doc = Application.DocumentManager.MdiActiveDocument;
@@ -491,6 +622,7 @@ public class ClCAD
                 ltr.Name = layerName;
                 ltr.Color = Color.FromColorIndex(ColorMethod.ByAci, color);
                 ltr.LineWeight = lineWeight;
+                ltr.IsPlottable = canPrint;
                 layertable.UpgradeOpen();
                 layertable.Add(ltr);
                 tr.AddNewlyCreatedDBObject(ltr, true);
@@ -690,11 +822,6 @@ public class ClCAD
             tr.Commit();
         }
     }
-    //public static void ZoomAll()
-    //{
-    //    var app = AcadApplication;
-    //    app.GetType().InvokeMember("ZoomExtents", BindingFlags.InvokeMethod, null, app, null);
-    //}
     public class DimStyleSettings
     {
         public string Name { get; set; } = "DTL";
@@ -704,7 +831,7 @@ public class ClCAD
         public double OffsetFromOrigin { get; set; } = 150;
         public short ColorDimLine { get; set; } = 2;
         public short ColorExtendLine { get; set; } = 2;
-
+         
         //Symbols
         public double Arrow_Size { get; set; } = 62.5;
         //Text
@@ -726,19 +853,77 @@ public class ClCAD
         using(doc.LockDocument())
         using(Transaction tr = db.TransactionManager.StartTransaction())
         {
-            HashSet<ObjectId> layers = new HashSet<ObjectId>();
-
             foreach (SelectedObject o in ss)
             {
                 Entity ent = (Entity)tr.GetObject(o.ObjectId, OpenMode.ForRead);
-                if(ent != null)
+                
+                if (ent is BlockReference brf)
+                {
+                    BlockTableRecord btr = (BlockTableRecord)tr.GetObject(brf.BlockTableRecord, OpenMode.ForRead);
+                    if (btr.IsFromExternalReference)
+                    {
+                        foreach(ObjectId id in btr)
+                        {
+                        Entity internalEnt = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                            if(internalEnt != null)
+                            {
+                                LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(internalEnt.LayerId, OpenMode.ForWrite);
+                                ltr.IsOff = true;
+                                //doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
+                            }
+                        }
+                    }
+                }
+                else
                 {
                     LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(ent.LayerId, OpenMode.ForWrite);
-                    if(ltr != null && !ltr.IsFrozen && !ltr.IsOff) // !layers.Contains(ltr.ObjectId))
+                    if (ltr != null && !ltr.IsFrozen && !ltr.IsOff) // !layers.contains(ltr.objectid))
                     {
                         ltr.IsOff = true;
-                        doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
-                        layers.Add(ltr.ObjectId);
+                        //doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
+                    }
+                }
+            }
+
+            tr.Commit();
+        }
+    }
+    public static void FrozenLayers(SelectionSet ss)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        using (doc.LockDocument())
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            foreach (SelectedObject o in ss)
+            {
+                Entity ent = (Entity)tr.GetObject(o.ObjectId, OpenMode.ForRead);
+
+                if (ent is BlockReference brf)
+                {
+                    BlockTableRecord btr = (BlockTableRecord)tr.GetObject(brf.BlockTableRecord, OpenMode.ForRead);
+                    if (btr.IsFromExternalReference)
+                    {
+                        foreach (ObjectId id in btr)
+                        {
+                            Entity internalEnt = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                            if (internalEnt != null)
+                            {
+                                LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(internalEnt.LayerId, OpenMode.ForWrite);
+                                ltr.IsFrozen = true;
+                                //doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(ent.LayerId, OpenMode.ForWrite);
+                    if (ltr != null && !ltr.IsFrozen && !ltr.IsOff) // !layers.contains(ltr.objectid))
+                    {
+                        ltr.IsFrozen = true;
+                        //doc.Editor.WriteMessage($"\n'{ltr.Name}' is hidden.");
                     }
                 }
             }
@@ -814,6 +999,7 @@ public class ClCAD
                 BlockTableRecord btr = (BlockTableRecord)tr.GetObject(id,OpenMode.ForRead);
                 if (btr.IsFromExternalReference)
                 {
+                    doc.Editor.WriteMessage("\n" + btr.PathName);
                     layers = GetXrefLayers(btr.PathName); 
                 }
             }
@@ -885,8 +1071,7 @@ public class ClCAD
         string blockName, 
         string device, 
         string paper, 
-        string styleName,
-        bool isCombineFile
+        string styleName
         )
     {
         List<string> pdfPath = new List<string>();
@@ -901,7 +1086,8 @@ public class ClCAD
                 try
                 {
                     List<PointClass> points = new List<PointClass>();
-                    var l = new Layout();
+                    var blockTableRecrod = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForRead);
+                    var l = (Layout)tr.GetObject(blockTableRecrod.LayoutId, OpenMode.ForRead);
                     var p1 = new Point3d();
                     var p2 = new Point3d();
 
@@ -947,17 +1133,26 @@ public class ClCAD
                     if (points.Count > 0)
                     {
                         pdfPath = ProcessPlotPdf(
-                            l, 
+                            l,
                             points, 
                             obj.FilePath, 
                             device, 
                             paper, 
-                            styleName, 
-                            isCombineFile
+                            styleName
                             );
                     }
-                    else ed.WriteMessage("\nThere is no same blocks: " +
-                        System.IO.Path.GetFileNameWithoutExtension(obj.FilePath)+"\n");
+                    else
+                    {
+                        pdfPath = ProcessPlotPdf(
+                           l,
+                           obj.FilePath,
+                           device,
+                           paper,
+                           styleName
+                           );
+                    }
+                        //ed.WriteMessage("\nThere is no same blocks: " +
+                        //System.IO.Path.GetFileNameWithoutExtension(obj.FilePath) + "\n");
                     tr.Commit();
                 }
                 catch (Autodesk.AutoCAD.Runtime.Exception ex)
@@ -971,17 +1166,17 @@ public class ClCAD
     }
     public static List<string> ProcessPlotPdf(
         Layout lo,
-        List<PointClass> points,
         string path,
         string device,
         string paper,
-        string styleName,
-        bool isCombine
+        string styleName
         )
     {
         int count = 1;
-        int numSheet = 1;
-        var dir = "D:\\sample\\1_150\\PDF\\";
+        //int numSheet = 1;
+        var dir = "C:\\samples\\";
+
+        //var dir = "D:\\sample\\1_150\\PDF\\";
         var result = new List<string>();
         //var dir = Path.GetDirectoryName(path)+"\\PDF\\";
         //FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -995,11 +1190,125 @@ public class ClCAD
         PlotInfo pi = new PlotInfo();
         using (PlotEngine pe = PlotFactory.CreatePublishEngine())
         {
-            using (PlotProgressDialog ppd = new PlotProgressDialog(false, (isCombine ? 1 : points.Count), true))
+            using (PlotProgressDialog ppd = new PlotProgressDialog(false, 1, true))
             {
-                foreach(PointClass p in points)
+                var pdfPath = $"{dir + Path.GetFileNameWithoutExtension(path) + "_" + count}.pdf";
+                var ps = new PlotSettings(lo.ModelType);
+                ps.CopyFrom(lo);
+
+                var psv = PlotSettingsValidator.Current;
+
+                ps.ScaleLineweights = true;
+                psv.SetPlotType(
+                    ps,
+                    Autodesk.AutoCAD.DatabaseServices.PlotType.Extents
+                );
+
+                psv.SetUseStandardScale(ps, true);
+                psv.SetStdScaleType(ps, StdScaleType.ScaleToFit);
+                psv.SetPlotRotation(ps, PlotRotation.Degrees180);
+                psv.SetPlotCentered(ps, true);
+                psv.SetPlotConfigurationName(ps, device, paper);
+                psv.SetCurrentStyleSheet(ps, styleName);
+
+                pi = new PlotInfo() { Layout = lo.ObjectId };
+                pi.OverrideSettings = ps;
+                piv.Validate(pi);
+
+                //if (numSheet == 1)
+                //{
+                ppd.set_PlotMsgString(PlotMessageIndex.DialogTitle, "Custom Plot Progress");
+                ppd.set_PlotMsgString(PlotMessageIndex.CancelJobButtonMessage, "Cancel Job");
+                ppd.set_PlotMsgString(PlotMessageIndex.CancelSheetButtonMessage, "Cancel Sheet");
+                ppd.set_PlotMsgString(PlotMessageIndex.SheetSetProgressCaption, "Sheet Set Progress");
+                ppd.set_PlotMsgString(PlotMessageIndex.SheetProgressCaption, "Sheet Progress");
+                ppd.LowerPlotProgressRange = 0;
+                ppd.UpperPlotProgressRange = 100;
+                ppd.PlotProgressPos = 0;
+
+                ppd.OnBeginPlot();
+                ppd.IsVisible = true;
+                pe.BeginPlot(ppd, null);
+
+                pe.BeginDocument(
+                    pi,
+                    Path.GetFileNameWithoutExtension(path),
+                    null,
+                    1,
+                    true,
+                    pdfPath
+                );
+                //}
+                ppd.OnBeginSheet();
+
+                ppd.LowerSheetProgressRange = 0;
+                ppd.UpperSheetProgressRange = 100;
+                ppd.SheetProgressPos = 0;
+
+                PlotPageInfo ppi = new PlotPageInfo();
+                pe.BeginPage(ppi, pi, true, null);
+
+                pe.BeginGenerateGraphics(null);
+                ppd.SheetProgressPos = 50;
+                pe.EndGenerateGraphics(null);
+
+                pe.EndPage(null);
+                ppd.SheetProgressPos = 100;
+                ppd.OnEndSheet();
+                //if(numSheet == 1)
+                //{
+                result.Add(pdfPath);
+                //}
+                // numSheet++; 
+                count++;
+                pe.EndDocument(null);
+
+                ppd.PlotProgressPos = 100;
+                ppd.OnEndPlot();
+                pe.EndPlot(null);
+                result.Add(pdfPath);
+
+                pe.EndDocument(null);
+
+                ppd.PlotProgressPos = 100;
+                ppd.OnEndPlot();
+                pe.EndPlot(null);
+            }
+        }
+        return result;
+    }
+    public static List<string> ProcessPlotPdf(
+        Layout lo,
+        List<PointClass> points,
+        string path,
+        string device,
+        string paper,
+        string styleName
+        )
+    {
+        int count = 1;
+        //int numSheet = 1;
+        var dir = "C:\\samples\\";
+
+        //var dir = "D:\\sample\\1_150\\PDF\\";
+        var result = new List<string>();
+        //var dir = Path.GetDirectoryName(path)+"\\PDF\\";
+        //FolderBrowserDialog dialog = new FolderBrowserDialog();
+        //dialog.Description = "저장 폴더 선택";
+        //var result = dialog.ShowDialog();
+        //if (result != DialogResult.OK) return;
+
+        //string folderPath = dialog.SelectedPath;
+        var piv = new PlotInfoValidator { MediaMatchingPolicy = MatchingPolicy.MatchEnabled };
+
+        PlotInfo pi = new PlotInfo();
+        using (PlotEngine pe = PlotFactory.CreatePublishEngine())
+        {
+            using (PlotProgressDialog ppd = new PlotProgressDialog(false, 1, true))
+            {
+                foreach (PointClass p in points)
                 {
-                    var pdfPath = $"{dir}{Path.GetFileNameWithoutExtension(path)}{(isCombine ? "" : ("_" + count))}.pdf";
+                    var pdfPath = $"{dir + Path.GetFileNameWithoutExtension(path) + "_" + count}.pdf";
                     var ps = new PlotSettings(lo.ModelType);
                     ps.CopyFrom(lo);
 
@@ -1025,30 +1334,30 @@ public class ClCAD
                     pi.OverrideSettings = ps;
                     piv.Validate(pi);
 
-                    if (numSheet == 1)
-                    {
-                        ppd.set_PlotMsgString(PlotMessageIndex.DialogTitle, "Custom Plot Progress");
-                        ppd.set_PlotMsgString(PlotMessageIndex.CancelJobButtonMessage, "Cancel Job");
-                        ppd.set_PlotMsgString(PlotMessageIndex.CancelSheetButtonMessage, "Cancel Sheet");
-                        ppd.set_PlotMsgString(PlotMessageIndex.SheetSetProgressCaption, "Sheet Set Progress");
-                        ppd.set_PlotMsgString(PlotMessageIndex.SheetProgressCaption, "Sheet Progress");
-                        ppd.LowerPlotProgressRange = 0;
-                        ppd.UpperPlotProgressRange = 100;
-                        ppd.PlotProgressPos = 0;
+                    //if (numSheet == 1)
+                    //{
+                    ppd.set_PlotMsgString(PlotMessageIndex.DialogTitle, "Custom Plot Progress");
+                    ppd.set_PlotMsgString(PlotMessageIndex.CancelJobButtonMessage, "Cancel Job");
+                    ppd.set_PlotMsgString(PlotMessageIndex.CancelSheetButtonMessage, "Cancel Sheet");
+                    ppd.set_PlotMsgString(PlotMessageIndex.SheetSetProgressCaption, "Sheet Set Progress");
+                    ppd.set_PlotMsgString(PlotMessageIndex.SheetProgressCaption, "Sheet Progress");
+                    ppd.LowerPlotProgressRange = 0;
+                    ppd.UpperPlotProgressRange = 100;
+                    ppd.PlotProgressPos = 0;
 
-                        ppd.OnBeginPlot();
-                        ppd.IsVisible = true;
-                        pe.BeginPlot(ppd, null);
+                    ppd.OnBeginPlot();
+                    ppd.IsVisible = true;
+                    pe.BeginPlot(ppd, null);
 
-                        pe.BeginDocument(
-                            pi,
-                            Path.GetFileNameWithoutExtension(path),
-                            null,
-                            1,
-                            true,
-                            pdfPath
-                        );
-                    }
+                    pe.BeginDocument(
+                        pi,
+                        Path.GetFileNameWithoutExtension(path),
+                        null,
+                        1,
+                        true,
+                        pdfPath
+                    );
+                    //}
                     ppd.OnBeginSheet();
 
                     ppd.LowerSheetProgressRange = 0;
@@ -1056,7 +1365,7 @@ public class ClCAD
                     ppd.SheetProgressPos = 0;
 
                     PlotPageInfo ppi = new PlotPageInfo();
-                    pe.BeginPage(ppi, pi, (isCombine ? numSheet == points.Count : true), null);
+                    pe.BeginPage(ppi, pi, true, null);
 
                     pe.BeginGenerateGraphics(null);
                     ppd.SheetProgressPos = 50;
@@ -1065,38 +1374,31 @@ public class ClCAD
                     pe.EndPage(null);
                     ppd.SheetProgressPos = 100;
                     ppd.OnEndSheet();
-                    if(isCombine) 
-                    { 
-                       if(numSheet == 1)
-                       {
-                           result.Add(pdfPath);
-                       }
-                        numSheet++; 
-                    }
-                    else
-                    {
-                        count++;
-                        pe.EndDocument(null);
-
-                        ppd.PlotProgressPos = 100;
-                        ppd.OnEndPlot();
-                        pe.EndPlot(null);
-                        result.Add(pdfPath);
-                    }
-                }
-                if(isCombine)
-                {
+                    //if(numSheet == 1)
+                    //{
+                    result.Add(pdfPath);
+                    //}
+                    // numSheet++; 
+                    count++;
                     pe.EndDocument(null);
 
                     ppd.PlotProgressPos = 100;
                     ppd.OnEndPlot();
                     pe.EndPlot(null);
+                    result.Add(pdfPath);
                 }
-            }
+
+                pe.EndDocument(null);
+
+                ppd.PlotProgressPos = 100;
+                ppd.OnEndPlot();
+                pe.EndPlot(null);
+            } 
         }
         return result;
     }
     public static ObservableCollection<BlockClass> SetChooseBlocks()
+
     {
         var doc = Application.DocumentManager.MdiActiveDocument;
         Database db = doc.Database;
@@ -1202,6 +1504,158 @@ public class ClCAD
 
         return ctbList;
     }
+    public static List<LineWeight> GetAllLineWeights()
+    {
+        // LineWeight enum에서 모든 값을 가져오기
+        List<LineWeight> lineWeights = new List<LineWeight>();
+
+        // 모든 LineWeight enum 값을 순회하여 문자열로 변환
+        foreach (LineWeight lw in (LineWeight[])System.Enum.GetValues(typeof(LineWeight)))
+        {
+            if (lw == LineWeight.ByLayer || lw == LineWeight.ByBlock || lw == LineWeight.ByLineWeightDefault)
+            {
+                continue;
+            }
+            else
+            {
+                if ((int)lw < 0)
+                {
+                lineWeights.Add(LineWeight.ByLineWeightDefault);
+                }
+                else
+                    lineWeights.Add(lw);
+            }
+
+        }
+
+        return lineWeights;
+    }
+    public static List<string> GetAllLinetypes()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+
+        string path = HostApplicationServices.Current.FindFile("acad.lin", db, FindFileHint.Default);
+
+        using (StreamReader sr = new StreamReader(path))
+        {
+            List<string> linetypes = new List<string>()
+                {
+                    "Continuous"
+                };
+            string line;
+            Char[] c = new char[] { ',' };
+            while ((line = sr.ReadLine()) != null)
+            {
+                if (line.StartsWith("*"))
+                {
+                    string[] info = line.Split(c);
+                    linetypes.Add(info[0].Substring(1));
+                }
+            }
+            return linetypes;
+        }
+    }
+    public static LayerClass Getlayer(string layerName)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            LayerTable lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead) as LayerTable;
+
+            if (lt.Has(layerName))
+            {
+                LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(lt[layerName], OpenMode.ForRead);
+
+                short layerColor = ltr.Color.ColorIndex;
+                ObjectId linetypeId = ltr.LinetypeObjectId;
+                LinetypeTableRecord linetypeTableRecord = (LinetypeTableRecord)tr.GetObject(linetypeId, OpenMode.ForRead);
+                string linetype = linetypeTableRecord.Name; // entity.Linetype;
+                LineWeight weight = ltr.LineWeight;
+                bool isPlottable = ltr.IsPlottable;
+                string description = ltr.Description;
+
+                var l = new LayerClass(
+                    ltr,
+                    layerName,
+                    //ltr.Color,
+                    //layerColor,
+                    linetype
+                    //weight,
+                    //isPlottable,
+                    //description,
+                    );
+
+                return l;
+            }
+            tr.Commit();
+        }
+
+        return null;
+    }
+    public static ObservableCollection<LayerClass> Getlayer(SelectionSet ss)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+        var list = new ObservableCollection<LayerClass>();
+
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            LayerTable lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead) as LayerTable;
+
+            foreach (SelectedObject selectedObj in ss)
+            {
+                if (selectedObj != null)
+                {
+                    // 객체 열기
+                    Entity ent = tr.GetObject(selectedObj.ObjectId, OpenMode.ForRead) as Entity;
+
+                    if (ent != null)
+                    {
+                        string layerName = ent.Layer;
+
+                        LayerTableRecord ltr = (LayerTableRecord)tr.GetObject(lt[layerName], OpenMode.ForRead);
+
+
+                        if(ent.Color.IsByLayer || ent.Linetype == "ByLayer")
+                        {
+                            Color c = Color.FromRgb(ltr.Color.Red, ltr.Color.Green, ltr.Color.Blue);
+                            short colorIndex = ltr.Color.ColorIndex;
+                            ObjectId linetypeId = ltr.LinetypeObjectId;
+                            LinetypeTableRecord linetypeTableRecord = (LinetypeTableRecord)tr.GetObject(linetypeId, OpenMode.ForRead);
+                            string linetype = linetypeTableRecord.Name; // entity.Linetype;
+                            LineWeight weight = ltr.LineWeight;
+                            bool isPlottable = ltr.IsPlottable;
+                            string description = ltr.Description;
+
+                            if(!list.Any(layer=>layer.LayerName == layerName))
+                            {
+                                ed.WriteMessage(ltr.Name);
+                                LayerClass l = new LayerClass
+                                    (
+                                        ltr,
+                                        layerName,
+                                        //ltr.Color,
+                                        //colorIndex,
+                                        linetype
+                                        //weight,
+                                        //isPlottable,
+                                        //description,
+                                    );
+                                list.Add(l);
+                            }
+                        }
+                    }
+                }
+            }
+            tr.Commit();
+        }
+        return list;
+    }
     //public static void ListPrinters()
     //{
     //    Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -1224,5 +1678,360 @@ public class ClCAD
     //    //var paperList = psv.GetCanonicalMediaNameList(ps).Cast<string>().ToList();
     //    //paperList.ForEach(p => doc.Editor.WriteMessage("\n\t size: {0}", p));
     //}
+    public static void SetObjectColor(SelectionSet ss, short color)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+
+        using (var tr = doc.TransactionManager.StartTransaction())
+        {
+            foreach (var id in ss.GetObjectIds())
+            {
+                var obj = (Entity)tr.GetObject(id, OpenMode.ForWrite);
+                if (obj != null)
+                {
+                    obj.Color = Color.FromColorIndex(ColorMethod.ByAci, color);
+                }
+            }
+
+            tr.Commit();
+        }
+    }
+    public static void SetObjectLineWeight(SelectionSet ss, LineWeight weight)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        using (var tr = doc.TransactionManager.StartTransaction())
+        {
+            foreach (var id in ss.GetObjectIds())
+            {
+                var obj = tr.GetObject(id, OpenMode.ForWrite) as Entity;
+                if (obj != null)
+                {
+                    obj.LineWeight = (LineWeight)weight;
+                }
+            }
+            tr.Commit();
+        }
+    }
+    public static void SetObjectLinetype(SelectionSet ss, string linetype)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        var db = doc.Database;
+        using (var tr = doc.TransactionManager.StartTransaction())
+        {
+            var linetypeTable = tr.GetObject(db.LinetypeTableId, OpenMode.ForRead) as LinetypeTable;
+
+            if (!linetypeTable.Has(linetype))
+            {
+                linetypeTable.UpgradeOpen();
+                db.LoadLineTypeFile(linetype, "acad.lin");
+            }
+
+            foreach (var id in ss.GetObjectIds())
+            {
+                var obj = tr.GetObject(id, OpenMode.ForWrite) as Entity;
+                if (obj != null)
+                {
+                    obj.Linetype = linetype;
+                }
+            }
+            tr.Commit();
+        }
+    }
+    public static void SelectObjectWipeout()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+
+        // 필터에 포함될 객체 유형
+        string[] filterObjectC = { "POLYLINE", "LWPOLYLINE", "CIRCLE", "ELLIPSE", "ARC", "SPLINE" };
+
+        // 선택 필터 생성
+        TypedValue[] filter = new TypedValue[]
+        {
+        new TypedValue((int)DxfCode.Start, "POLYLINE,LWPOLYLINE,CIRCLE,ELLIPSE,ARC,SPLINE")
+        };
+
+        // 사용자에게 선택 요구
+        PromptSelectionResult selection = ed.GetSelection(new SelectionFilter(filter));
+        if (selection.Status != PromptStatus.OK)
+        {
+            ed.WriteMessage("\nNo objects selected.");
+            return;
+        }
+
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            SelectionSet selectedObjects = selection.Value;
+            foreach (SelectedObject selObj in selectedObjects)
+            {
+                Entity ent = tr.GetObject(selObj.ObjectId, OpenMode.ForRead) as Entity;
+
+                if (ent != null && filterObjectC.Contains(ent.GetType().Name.ToUpper()))
+                {
+                    //BlockReference blockRef = ent as BlockReference;
+                    //var mat = blockRef.BlockTransform;
+                    GoAndWipe(ent);
+                }
+            }
+            tr.Commit();
+        }
+    }
+    public static void GoAndWipe(Entity entity)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+
+        // Polyline, LWPOLYLINE에 대한 처리
+        if (entity is Polyline polyline)
+        {
+            bool isClosed = polyline.Closed;
+
+            if (isClosed)
+            {
+                ed.Command("_.wipeout", "_P", entity.ObjectId, "_N");
+                ed.Command("_.draworder", entity.ObjectId, "", "_U", entity.ObjectId, "");
+            }
+            else
+            {
+                ObjectId newCopyId = CopyEntity(entity);
+                ed.Command("_.pedit", newCopyId, "_C", "");
+                ed.Command("_.wipeout", "_P", newCopyId, "_N");
+                ed.Command("_.draworder", entity.ObjectId, "", "_U", newCopyId, "");
+                ed.Command("_.erase", newCopyId, "");
+            }
+        }
+
+        // Circle, Ellipse, Arc, Spline에 대한 처리
+        else if (entity is Circle || entity is Ellipse || entity is Arc || entity is Spline)
+        {
+            CreateWipeoutForCurve(entity);
+        }
+    }
+    public static void ModifyDimensionStartPoint()
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+
+        TypedValue[] filterList = new TypedValue[]
+        {
+            new TypedValue((int)DxfCode.Start, "DIMENSION")
+        };
+        SelectionFilter filter = new SelectionFilter(filterList);
+
+        PromptSelectionResult psr = ed.GetSelection(filter);
+        if (psr.Status != PromptStatus.OK) return;
+
+        SelectionSet ss = psr.Value;
+
+        PromptPointResult pointResult = ed.GetPoint("\nSelect a Point:");
+        if (pointResult.Status != PromptStatus.OK) return;
+        Point3d targetPoint = pointResult.Value;
+
+        Vector3d direction = new Vector3d();
+        double newHeight = 0;
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            foreach (SelectedObject obj in ss)
+            {
+                if (obj == null) continue;
+                Dimension dim = tr.GetObject(obj.ObjectId, OpenMode.ForWrite) as Dimension;
+                if (dim == null) continue;
+
+                Vector3d moveVector = new Vector3d(0, 0, 0);
+
+                if (dim is AlignedDimension alignedDim)
+                {
+                    Vector3d alignDirection = alignedDim.XLine2Point - alignedDim.XLine1Point;
+                    alignDirection = alignDirection.GetPerpendicularVector();
+                    alignDirection = alignDirection.GetNormal();
+
+                    newHeight = alignDirection.DotProduct(targetPoint - alignedDim.XLine1Point);
+
+                    alignedDim.MoveStretchPointsAt(new IntegerCollection(new int[] { 0, 1 }), alignDirection * newHeight);
+                }
+                else if (dim is RotatedDimension rotatedDim)
+                {
+                    direction = GetRotatedDimensionVectorTo(rotatedDim);
+
+                    if (direction.Equals(new Vector3d(0, -1, 0)) || direction.Equals(new Vector3d(0, 1, 0)))
+                    {
+                        newHeight = Math.Abs(rotatedDim.XLine1Point.Y - targetPoint.Y);
+                    }
+                    else if (direction.Equals(new Vector3d(-1, 0, 0)) || direction.Equals(new Vector3d(1, 0, 0)))
+                    {
+                        newHeight = Math.Abs(rotatedDim.XLine1Point.X - targetPoint.X);
+                    }
+
+                    rotatedDim.MoveStretchPointsAt(new IntegerCollection(new int[] { 0, 1 }), direction * newHeight);
+                }
+            }
+            tr.Commit();
+        }
+    }
+    private static Vector3d GetRotatedDimensionVectorTo(RotatedDimension dim)
+    {
+        Point3d dimLinePoint = dim.DimLinePoint;
+        Point3d xLine1Point = dim.XLine1Point;
+        Point3d xLine2Point = dim.XLine2Point;
+
+        Vector3d direction = new Vector3d(0, 0, 0);
+
+        if (Math.Abs(xLine1Point.Y - xLine2Point.Y) < Tolerance.Global.EqualPoint)
+        {
+            direction = (xLine1Point.Y > dimLinePoint.Y) ? new Vector3d(0, -1, 0) : new Vector3d(0, 1, 0);
+        }
+        else if (Math.Abs(xLine1Point.X - xLine2Point.X) < Tolerance.Global.EqualPoint)
+        {
+            direction = (xLine1Point.X > dimLinePoint.X) ? new Vector3d(-1, 0, 0) : new Vector3d(1, 0, 0);
+        }
+
+        return direction;
+    }
+    private static ObjectId CopyEntity(Entity entity)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        var db = doc.Database;
+        ObjectId newObjId;
+
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+            BlockTableRecord btr = (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+
+            // 복사할 엔터티 생성
+            Entity copyEntity = entity.Clone() as Entity;
+            newObjId = btr.AppendEntity(copyEntity);
+            tr.AddNewlyCreatedDBObject(copyEntity, true);
+
+            tr.Commit();
+        }
+        return newObjId;
+    }
+    private static void CreateWipeoutForCurve(Entity entity)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        Database db = doc.Database;
+        Editor ed = doc.Editor;
+
+        // 곡선 엔터티의 포인트를 따라 새로운 Polyline 생성 및 Wipeout 처리
+        Curve curve = entity as Curve;
+        if (curve == null) return;
+
+        double constDist = curve.GetDistanceAtParameter(curve.EndParam) / 50.0;
+        List<Point3d> points = new List<Point3d>();
+
+        // 곡선의 지점들 계산
+        for (int i = 0; i < 50; i++)
+        {
+            double dist = constDist * i;
+            Point3d point = curve.GetPointAtDist(dist);
+            points.Add(point);
+        }
+
+        // Polyline을 추가하는 트랜잭션 시작
+        using (Transaction tr = db.TransactionManager.StartTransaction())
+        {
+            BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+            BlockTableRecord btr = (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+
+            // 새로운 Polyline 생성
+            using (Polyline newPolyline = new Polyline())
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    newPolyline.AddVertexAt(i, new Point2d(points[i].X, points[i].Y), 0, 0, 0);
+                }
+                newPolyline.Closed = true;
+
+                // Polyline을 모델 공간에 추가하고 ObjectId 저장
+                ObjectId newPolylineId = btr.AppendEntity(newPolyline);
+                tr.AddNewlyCreatedDBObject(newPolyline, true);
+
+                // Wipeout 생성 및 Draw Order 적용
+                ed.Command("_.wipeout", "_P", newPolylineId, "_N");
+                ed.Command("_.draworder", newPolylineId, "", "_U", entity.ObjectId, "");
+            }
+
+            tr.Commit();
+        }
+    }
+
+    public static void AlignText(string direction, int space)
+    {
+        var doc = Application.DocumentManager.MdiActiveDocument;
+        var db = doc.Database;
+        var ed = doc.Editor;
+        PromptPointResult p1 = ed.GetPoint("\nSelect first corner: ");
+        if (p1.Status != PromptStatus.OK) return;
+
+        //SetLinetype("Dashed");
+        RectangleJig jig = new RectangleJig(p1.Value);
+        if (ed.Drag(jig).Status != PromptStatus.OK) return;
+
+        var p2 = jig.CurrentPoint;
+
+        using(var tr = db.TransactionManager.StartTransaction())
+        {
+            Point3d minPoint = new Point3d(
+                Math.Min(p1.Value.X, p2.X),
+                Math.Min(p1.Value.Y, p2.Y),
+                Math.Min(p1.Value.Z, p2.Z)
+            );
+
+            Point3d maxPoint = new Point3d(
+                Math.Max(p1.Value.X, p2.X),
+                Math.Max(p1.Value.Y, p2.Y),
+                Math.Max(p1.Value.Z, p2.Z)
+            );
+
+            Extents3d region = new Extents3d(minPoint, maxPoint);
+            BlockTableRecord btr = (BlockTableRecord)tr.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
+
+            foreach (var id in btr)
+            {
+                var obj = tr.GetObject(id, OpenMode.ForRead);
+                if(obj is DBText text)
+                {
+                    text.UpgradeOpen();
+                    text.VerticalMode = TextVerticalMode.TextVerticalMid;
+                    if (IsPointWithinExtents(text.Position, region) && direction == "left")
+                    {
+                        Point3d centerPoint = new Point3d
+                            (
+                                region.MinPoint.X + space,
+                                text.Position.Y,
+                                text.Position.Z
+                            );
+                        Vector3d moveVector = centerPoint - text.Position;
+                        text.HorizontalMode = TextHorizontalMode.TextCenter;
+                        text.TransformBy(Matrix3d.Displacement(moveVector));
+                    };
+                    if (IsPointWithinExtents(text.Position, region) && direction == "center")
+                    {
+                        text.HorizontalMode = TextHorizontalMode.TextCenter;
+                        text.AlignmentPoint = new Point3d((region.MinPoint.X + region.MaxPoint.X) / 2.0, (text.Position.Y + (text.Height / 2.0)), 0.0);
+                        text.AdjustAlignment(db);
+                    };
+                    if (IsPointWithinExtents(text.Position, region)&& direction == "right")
+                    {
+                        text.HorizontalMode = TextHorizontalMode.TextRight;
+                        text.VerticalMode = TextVerticalMode.TextVerticalMid;
+                        text.AlignmentPoint = new Point3d(region.MaxPoint.X - space, (text.Position.Y + (text.Height / 2.0)), 0.0);
+                        text.AdjustAlignment(db);
+                    };
+                }
+            }
+            tr.Commit();
+        }
+    }
+    private static bool IsPointWithinExtents(Point3d position, Extents3d region)
+    {
+        return position.X >= region.MinPoint.X && position.X <= region.MaxPoint.X &&
+               position.Y >= region.MinPoint.Y && position.Y <= region.MaxPoint.Y &&
+               position.Z >= region.MinPoint.Z && position.Z <= region.MaxPoint.Z;
+    }
     #endregion
 }
